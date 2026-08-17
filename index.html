@@ -1,290 +1,498 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iraq Cars - منصة السيارات الشاملة في العراق</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0d47a1;
+            --secondary: #1e88e5;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #0f172a;
+            --muted: #64748b;
+        }
 
-  <title>Iraq Cars</title>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            padding-bottom: 50px;
+        }
 
-    body {
-      background: #f5f6f8;
-      color: #111827;
-    }
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3c72 100%);
+            color: white;
+            padding: 35px 15px;
+            text-align: center;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+        }
 
-    header {
-      background: #111827;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+        .hero h1 {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
 
-    header h1 {
-      font-size: 30px;
-      margin-bottom: 8px;
-    }
+        .hero p {
+            font-size: 14px;
+            opacity: 0.85;
+            margin-bottom: 20px;
+        }
 
-    header p {
-      color: #cbd5e1;
-    }
+        .search-container {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            padding: 4px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
 
-    .hero {
-      background: linear-gradient(135deg, #111827, #1e40af);
-      color: white;
-      padding: 45px 20px;
-      text-align: center;
-    }
+        .search-container input {
+            flex: 1;
+            border: none;
+            padding: 12px 16px;
+            font-size: 15px;
+            outline: none;
+            color: #333;
+        }
 
-    .hero h2 {
-      font-size: 28px;
-      margin-bottom: 12px;
-    }
+        .search-container button {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0 22px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+        }
 
-    .hero p {
-      margin-bottom: 25px;
-      color: #dbeafe;
-    }
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 20px 15px;
+        }
 
-    .search {
-      max-width: 600px;
-      margin: auto;
-      display: flex;
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-    }
+        .section-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 25px 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .search input {
-      flex: 1;
-      border: none;
-      padding: 16px;
-      font-size: 16px;
-      outline: none;
-      text-align: right;
-    }
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
 
-    .search button {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 0 25px;
-      font-size: 16px;
-    }
+        .service-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 18px 12px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
 
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 30px 15px;
-    }
+        .service-card:active {
+            transform: scale(0.97);
+            background: #f1f5f9;
+        }
 
-    .title {
-      text-align: center;
-      margin-bottom: 25px;
-    }
+        .service-card .icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
 
-    .title h2 {
-      font-size: 24px;
-    }
+        .service-card h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
 
-    .features {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-    }
+        .service-card p {
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.3;
+        }
 
-    .feature {
-      background: white;
-      padding: 25px 15px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.07);
-    }
+        .tool-panel {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            border: 2px solid var(--secondary);
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
 
-    .feature .icon {
-      font-size: 35px;
-      margin-bottom: 10px;
-    }
+        .tool-panel h3 {
+            font-size: 17px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
 
-    .feature h3 {
-      margin-bottom: 7px;
-    }
+        .form-group {
+            margin-bottom: 12px;
+        }
 
-    .feature p {
-      color: #6b7280;
-      font-size: 14px;
-    }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
 
-    .cars {
-      margin-top: 40px;
-    }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
 
-    .car-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-    }
+        .btn-action {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+        }
 
-    .car {
-      background: white;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.07);
-    }
+        .result-box {
+            margin-top: 12px;
+            padding: 12px;
+            background: #eff6ff;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
 
-    .car-image {
-      height: 130px;
-      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 55px;
-    }
+        .cars-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-    .car-info {
-      padding: 15px;
-    }
+        .car-item {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
 
-    .car-info h3 {
-      margin-bottom: 8px;
-    }
+        .car-item img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+        }
 
-    .car-info p {
-      color: #6b7280;
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
+        .car-details {
+            padding: 15px;
+        }
 
-    .price {
-      color: #2563eb;
-      font-weight: bold;
-      font-size: 17px;
-    }
+        .car-name {
+            font-size: 16px;
+            font-weight: 700;
+        }
 
-    footer {
-      margin-top: 40px;
-      background: #111827;
-      color: white;
-      text-align: center;
-      padding: 25px;
-    }
+        .car-price {
+            color: #16a34a;
+            font-weight: 800;
+            font-size: 15px;
+            margin: 4px 0 10px 0;
+        }
 
-    @media (min-width: 700px) {
-      .features {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      .car-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-  </style>
+        .car-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--muted);
+            background: #f8fafc;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+    </style>
 </head>
-
 <body>
 
-  <header>
-    <h1>🚘 Iraq Cars</h1>
-    <p>منصتك لمعرفة كل شيء عن السيارات في العراق</p>
-  </header>
-
-  <section class="hero">
-    <h2>شنو السيارة اللي تدور عليها؟</h2>
-    <p>ابحث، قارن، واعرف السعر والصرفية والمواصفات</p>
-
-    <div class="search">
-      <input type="text" placeholder="مثلاً: Toyota Camry 2024">
-      <button>بحث 🔍</button>
+    <div class="hero">
+        <h1>Iraq Cars منصة</h1>
+        <p>ابحث، قارن، واعرف السعر والصرفية والمواصفات</p>
+        <div class="search-container">
+            <input type="text" id="searchInput" onkeyup="filterCars()" placeholder="ابحث عن سيارة (مثلاً: كامري، النترا، جيب)...">
+            <button onclick="filterCars()">بحث 🔍</button>
+        </div>
     </div>
-  </section>
 
-  <main class="container">
+    <div class="container">
 
-    <section>
-      <div class="title">
-        <h2>خدمات Iraq Cars</h2>
-      </div>
-
-      <div class="features">
-
-        <div class="feature">
-          <div class="icon">🚗</div>
-          <h3>سيارات للبيع</h3>
-          <p>ابحث عن السيارات المعروضة للبيع في العراق</p>
+        <h2 class="section-title">خدمات Iraq Cars</h2>
+        <div class="services-grid">
+            <div class="service-card" onclick="openTool('cars-section')">
+                <div class="icon">🚗</div>
+                <h3>سيارات للبيع</h3>
+                <p>تصفح قائمة السيارات المتاحة في السوق العراقي</p>
+            </div>
+            <div class="service-card" onclick="togglePanel('compare-panel')">
+                <div class="icon">⚖️</div>
+                <h3>مقارنة السيارات</h3>
+                <p>قارن المواصفات بين سيارتين مباشرة</p>
+            </div>
+            <div class="service-card" onclick="togglePanel('fuel-panel')">
+                <div class="icon">⛽</div>
+                <h3>حاسبة الوقود</h3>
+                <p>احسب التكلفة الشهرية للبنزين</p>
+            </div>
+            <div class="service-card" onclick="togglePanel('loan-panel')">
+                <div class="icon">💳</div>
+                <h3>حاسبة الأقساط</h3>
+                <p>احسب قسط الشراء الشهري التقديري</p>
+            </div>
         </div>
 
-        <div class="feature">
-          <div class="icon">⚖️</div>
-          <h3>مقارنة السيارات</h3>
-          <p>قارن بين سيارتين وشوف الفرق بينهن</p>
+        <!-- Fuel Calculator -->
+        <div id="fuel-panel" class="tool-panel">
+            <h3>⛽ حاسبة تكلفة الوقود</h3>
+            <div class="form-group">
+                <label>المسافة اليومية التقريبية (كم):</label>
+                <input type="number" id="fuelKm" value="60">
+            </div>
+            <div class="form-group">
+                <label>نوع البنزين:</label>
+                <select id="fuelType">
+                    <option value="750">عادي (750 د.ع/لتر)</option>
+                    <option value="1000">محسن (1000 د.ع/لتر)</option>
+                    <option value="1250">سوبر (1250 د.ع/لتر)</option>
+                </select>
+            </div>
+            <button class="btn-action" onclick="calcFuel()">احسب التكلفة</button>
+            <div id="fuelResult" class="result-box" style="display:none;"></div>
         </div>
 
-        <div class="feature">
-          <div class="icon">⛽</div>
-          <h3>حاسبة الوقود</h3>
-          <p>احسب تكلفة البنزين الشهرية لسيارتك</p>
+        <!-- Loan Calculator -->
+        <div id="loan-panel" class="tool-panel">
+            <h3>💳 حاسبة الأقساط الشهرية</h3>
+            <div class="form-group">
+                <label>سعر السيارة ($ بالدولار):</label>
+                <input type="number" id="loanPrice" value="22000">
+            </div>
+            <div class="form-group">
+                <label>الدفعة الأولى ($ بالدولار):</label>
+                <input type="number" id="loanDown" value="5000">
+            </div>
+            <div class="form-group">
+                <label>مدة التقسيط:</label>
+                <select id="loanYears">
+                    <option value="1">سنة واحدة</option>
+                    <option value="2">سنتان</option>
+                    <option value="3">3 سنوات</option>
+                    <option value="5">5 سنوات</option>
+                </select>
+            </div>
+            <button class="btn-action" onclick="calcLoan()">احسب القسط</button>
+            <div id="loanResult" class="result-box" style="display:none;"></div>
         </div>
 
-        <div class="feature">
-          <div class="icon">💳</div>
-          <h3>حاسبة الأقساط</h3>
-          <p>احسب القسط الشهري للسيارة</p>
+        <!-- Compare Cars -->
+        <div id="compare-panel" class="tool-panel">
+            <h3>⚖️ أداة المقارنة</h3>
+            <div class="form-group">
+                <label>السيارة الأولى:</label>
+                <select id="compCar1">
+                    <option value="كامري">تويوتا كامري</option>
+                    <option value="النترا">هيونداي النترا</option>
+                    <option value="رانجلر">جيب رانجلر</option>
+                    <option value="سوناتا">هيونداي سوناتا</option>
+                    <option value="تاهو">شيفروليه تاهو</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>السيارة الثانية:</label>
+                <select id="compCar2">
+                    <option value="سوناتا">هيونداي سوناتا</option>
+                    <option value="كامري">تويوتا كامري</option>
+                    <option value="النترا">هيونداي النترا</option>
+                    <option value="رانجلر">جيب رانجلر</option>
+                    <option value="تاهو">شيفروليه تاهو</option>
+                </select>
+            </div>
+            <button class="btn-action" onclick="runCompare()">عرض المقارنة</button>
+            <div id="compResult" class="result-box" style="display:none;"></div>
         </div>
 
-      </div>
-    </section>
+        <h2 class="section-title" id="cars-section">🔥 سيارات معروضة ومطلوبة</h2>
+        
+        <div class="cars-list" id="carsList">
 
-    <section class="cars">
+            <div class="car-item" data-title="تويوتا كامري toyota camry 2024">
+                <img src="https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=600&auto=format&fit=crop" alt="Camry">
+                <div class="car-details">
+                    <div class="car-name">تويوتا كامري 2024 (Toyota Camry)</div>
+                    <div class="car-price">$26,800 (حوالي 40,200,000 د.ع)</div>
+                    <div class="car-specs">
+                        <span>المحرك: 2.5L 4-Cylinder</span>
+                        <span>الموقع: بغداد</span>
+                        <span>الصرفية: ممتازة</span>
+                        <span>الحالة: زيرو</span>
+                    </div>
+                </div>
+            </div>
 
-      <div class="title">
-        <h2>سيارات مشهورة 🔥</h2>
-      </div>
+            <div class="car-item" data-title="جيب رانجلر jeep wrangler 2023">
+                <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&auto=format&fit=crop" alt="Wrangler">
+                <div class="car-details">
+                    <div class="car-name">جيب رانجلر روبيكون 2023 (Jeep Wrangler)</div>
+                    <div class="car-price">$42,500 (حوالي 63,750,000 د.ع)</div>
+                    <div class="car-specs">
+                        <span>المحرك: 3.6L V6</span>
+                        <span>الموقع: اربيل</span>
+                        <span>الدفع: 4x4 رباعي</span>
+                        <span>الحالة: مستعمل نظيف</span>
+                    </div>
+                </div>
+            </div>
 
-      <div class="car-grid">
+            <div class="car-item" data-title="هيونداي النترا hyundai elantra 2023">
+                <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=600&auto=format&fit=crop" alt="Elantra">
+                <div class="car-details">
+                    <div class="car-name">هيونداي النترا 2023 (Hyundai Elantra)</div>
+                    <div class="car-price">$18,500 (حوالي 27,750,000 د.ع)</div>
+                    <div class="car-specs">
+                        <span>المحرك: 2.0L</span>
+                        <span>الموقع: البصرة</span>
+                        <span>الصرفية: اقتصادي جداً</span>
+                        <span>الحالة: زيرو</span>
+                    </div>
+                </div>
+            </div>
 
-        <div class="car">
-          <div class="car-image">🚘</div>
-          <div class="car-info">
-            <h3>Toyota Camry</h3>
-            <p>2024 • سيدان • بنزين</p>
-            <div class="price">السعر: قريباً</div>
-          </div>
+            <div class="car-item" data-title="هيونداي سوناتا hyundai sonata 2024">
+                <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=600&auto=format&fit=crop" alt="Sonata">
+                <div class="car-details">
+                    <div class="car-name">هيونداي سوناتا 2024 (Hyundai Sonata)</div>
+                    <div class="car-price">$24,200 (حوالي 36,300,000 د.ع)</div>
+                    <div class="car-specs">
+                        <span>المحرك: 2.5L</span>
+                        <span>الموقع: بغداد</span>
+                        <span>المواصفات: بانوراما / فول</span>
+                        <span>الحالة: زيرو</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="car-item" data-title="شيفروليه تاهو chevrolet tahoe 2023">
+                <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&auto=format&fit=crop" alt="Tahoe">
+                <div class="car-details">
+                    <div class="car-name">شيفروليه تاهو 2023 (Chevrolet Tahoe)</div>
+                    <div class="car-price">$62,000 (حوالي 93,000,000 د.ع)</div>
+                    <div class="car-specs">
+                        <span>المحرك: 5.3L V8</span>
+                        <span>الموقع: سليمانية</span>
+                        <span>السعة: 8 ركاب</span>
+                        <span>الحالة: زيرو</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <div class="car">
-          <div class="car-image">🚙</div>
-          <div class="car-info">
-            <h3>Toyota Land Cruiser</h3>
-            <p>2024 • SUV • بنزين</p>
-            <div class="price">السعر: قريباً</div>
-          </div>
-        </div>
+    </div>
 
-        <div class="car">
-          <div class="car-image">🏎️</div>
-          <div class="car-info">
-            <h3>BYD Seal</h3>
-            <p>2024 • كهربائية • سيدان</p>
-            <div class="price">السعر: قريباً</div>
-          </div>
-        </div>
+    <script>
+        function togglePanel(id) {
+            document.querySelectorAll('.tool-panel').forEach(p => {
+                if(p.id !== id) p.style.display = 'none';
+            });
+            const target = document.getElementById(id);
+            target.style.display = target.style.display === 'block' ? 'none' : 'block';
+            if(target.style.display === 'block') {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
 
-      </div>
+        function openTool(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
 
-    </section>
+        function filterCars() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cars = document.querySelectorAll('.car-item');
+            
+            cars.forEach(car => {
+                const title = car.getAttribute('data-title').toLowerCase();
+                if(title.includes(input)) {
+                    car.style.display = 'block';
+                } else {
+                    car.style.display = 'none';
+                }
+            });
+        }
 
-  </main>
+        function calcFuel() {
+            const km = parseFloat(document.getElementById('fuelKm').value) || 0;
+            const price = parseFloat(document.getElementById('fuelType').value);
+            const monthlyLiters = (km * 30 / 100) * 10; 
+            const total = Math.round(monthlyLiters * price);
+            
+            const res = document.getElementById('fuelResult');
+            res.style.display = 'block';
+            res.innerHTML = `التكلفة الشهرية التقديرية للبنزين:<br><span style="font-size:20px; color:#16a34a;">${total.toLocaleString()} دينار عراقي</span>`;
+        }
 
-  <footer>
-    <p>© 2026 Iraq Cars</p>
-    <p>منصة السيارات العراقية 🚘🇮🇶</p>
-  </footer>
+        function calcLoan() {
+            const price = parseFloat(document.getElementById('loanPrice').value) || 0;
+            const down = parseFloat(document.getElementById('loanDown').value) || 0;
+            const years = parseInt(document.getElementById('loanYears').value);
+            
+            const remaining = price - down;
+            if(remaining <= 0) {
+                alert('الدفعة الأولى أكبر من أو تساوي سعر السيارة!');
+                return;
+            }
+            const monthly = (remaining / (years * 12)).toFixed(0);
+            
+            const res = document.getElementById('loanResult');
+            res.style.display = 'block';
+            res.innerHTML = `المبلغ المتبقي للتقسيط: $${remaining.toLocaleString()}<br>القسط الشهري: <span style="font-size:20px; color:#16a34a;">$${monthly} / شهرياً</span>`;
+        }
 
+        function runCompare() {
+            const c1 = document.getElementById('compCar1').value;
+            const c2 = document.getElementById('compCar2').value;
+            
+            const res = document.getElementById('compResult');
+            res.style.display = 'block';
+            res.innerHTML = `مقارنة بين <b>${c1}</b> و <b>${c2}</b>:<br><small style="color:#475569;">تتميز ${c1} بسهولة الصيانة وتوفر قطع الغيار، بينما تقدم ${c2} التقنيات والراحة أثناء القيادة داخل المدينة.</small>`;
+        }
+    </script>
 </body>
 </html>
