@@ -2213,4 +2213,798 @@ window.addEventListener(
 /* =========================================================
    PART 3 COMPLETE
 ========================================================= */
+/* =========================================================
+   IRAQ CARS - PART 4
+   EXTRA FUNCTIONS
+========================================================= */
+
+
+/* =========================================================
+   CREATE CALCULATORS
+========================================================= */
+
+function createCalculators() {
+
+  if (
+    document.getElementById("iraqCalculators")
+  ) {
+    return;
+  }
+
+
+  const database =
+    document.getElementById("car-database");
+
+
+  if (!database) return;
+
+
+  const section =
+    document.createElement("section");
+
+
+  section.id =
+    "iraqCalculators";
+
+  section.className =
+    "container";
+
+
+  section.innerHTML = `
+
+    <div class="section-title">
+
+      <h2>
+        🧮 حاسبات السيارات
+      </h2>
+
+      <p>
+        احسب مصاريف سيارتك بشكل سريع
+      </p>
+
+    </div>
+
+
+    <div style="
+      display:grid;
+      grid-template-columns:
+      repeat(auto-fit,minmax(280px,1fr));
+      gap:20px;
+    ">
+
+
+      <!-- FUEL -->
+
+      <div style="
+        background:white;
+        padding:22px;
+        border-radius:18px;
+        box-shadow:
+        0 5px 20px rgba(0,0,0,.07);
+      ">
+
+        <h3 style="margin-bottom:15px;">
+          ⛽ حاسبة الوقود
+        </h3>
+
+
+        <label>
+          المسافة اليومية
+        </label>
+
+        <input
+          id="fuelDistance"
+          type="number"
+          placeholder="مثلاً 100 كم"
+          style="
+            width:100%;
+            padding:12px;
+            margin:7px 0 12px;
+            border:1px solid #ddd;
+            border-radius:9px;
+          "
+        >
+
+
+        <label>
+          استهلاك السيارة
+        </label>
+
+        <input
+          id="fuelConsumption"
+          type="number"
+          placeholder="كم لكل لتر"
+          style="
+            width:100%;
+            padding:12px;
+            margin:7px 0 12px;
+            border:1px solid #ddd;
+            border-radius:9px;
+          "
+        >
+
+
+        <label>
+          سعر اللتر بالدينار
+        </label>
+
+        <input
+          id="fuelPrice"
+          type="number"
+          placeholder="مثلاً 850"
+          style="
+            width:100%;
+            padding:12px;
+            margin:7px 0 15px;
+            border:1px solid #ddd;
+            border-radius:9px;
+          "
+        >
+
+
+        <button
+          onclick="calculateFuel()"
+          style="
+            width:100%;
+            border:none;
+            background:#2563eb;
+            color:white;
+            padding:13px;
+            border-radius:10px;
+            font-size:15px;
+            cursor:pointer;
+          "
+        >
+          احسب التكلفة
+        </button>
+
+
+        <div
+          id="fuelResult"
+          style="margin-top:15px;"
+        ></div>
+
+      </div>
+
+
+      <!-- INSTALLMENT -->
+
+      <div style="
+        background:white;
+        padding:22px;
+        border-radius:18px;
+        box-shadow:
+        0 5px 20px rgba(0,0,0,.07);
+      ">
+
+        <h3 style="margin-bottom:15px;">
+          💳 حاسبة الأقساط
+        </h3>
+
+
+        <label>
+          سعر السيارة بالدينار
+        </label>
+
+        <input
+          id="installmentPrice"
+          type="number"
+          placeholder="مثلاً 30000000"
+          style="
+            width:100%;
+            padding:12px;
+            margin:7px 0 12px;
+            border:1px solid #ddd;
+            border-radius:9px;
+          "
+        >
+
+
+        <label>
+          الدفعة الأولى
+        </label>
+
+        <input
+          id="downPayment"
+          type="number"
+          placeholder="مثلاً 5000000"
+          style="
+            width:100%;
+            padding:12px;
+            margin:7px 0 12px;
+            border:1px solid #ddd;
+            border-radius:9px;
+          "
+        >
+
+
+        <label>
+          عدد الأشهر
+        </label>
+
+        <input
+          id="installmentMonths"
+          type="number"
+          placeholder="مثلاً 36"
+          style="
+            width:100%;
+            padding:12px;
+            margin:7px 0 12px;
+            border:1px solid #ddd;
+            border-radius:9px;
+          "
+        >
+
+
+        <label>
+          نسبة الفائدة %
+        </label>
+
+        <input
+          id="installmentInterest"
+          type="number"
+          placeholder="مثلاً 5"
+          style="
+            width:100%;
+            padding:12px;
+            margin:7px 0 15px;
+            border:1px solid #ddd;
+            border-radius:9px;
+          "
+        >
+
+
+        <button
+          onclick="calculateInstallment()"
+          style="
+            width:100%;
+            border:none;
+            background:#16a34a;
+            color:white;
+            padding:13px;
+            border-radius:10px;
+            font-size:15px;
+            cursor:pointer;
+          "
+        >
+          احسب القسط
+        </button>
+
+
+        <div
+          id="installmentResult"
+          style="margin-top:15px;"
+        ></div>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  database.after(section);
+
+}
+
+
+/* =========================================================
+   FAVORITES PANEL
+========================================================= */
+
+function createFavoritesButton() {
+
+  if (
+    document.getElementById(
+      "favoritesFloatingButton"
+    )
+  ) {
+    return;
+  }
+
+
+  const button =
+    document.createElement("button");
+
+
+  button.id =
+    "favoritesFloatingButton";
+
+
+  button.innerHTML =
+    "❤️ المفضلة";
+
+
+  button.style.position =
+    "fixed";
+
+  button.style.left =
+    "15px";
+
+  button.style.bottom =
+    "20px";
+
+  button.style.zIndex =
+    "8000";
+
+  button.style.border =
+    "none";
+
+  button.style.background =
+    "#dc2626";
+
+  button.style.color =
+    "white";
+
+  button.style.padding =
+    "12px 18px";
+
+  button.style.borderRadius =
+    "30px";
+
+  button.style.cursor =
+    "pointer";
+
+  button.style.boxShadow =
+    "0 5px 20px rgba(0,0,0,.2)";
+
+
+  button.onclick =
+    showFavorites;
+
+
+  document.body.appendChild(
+    button
+  );
+
+}
+
+
+/* =========================================================
+   FAVORITES COUNT
+========================================================= */
+
+function updateFavoritesCount() {
+
+  const button =
+    document.getElementById(
+      "favoritesFloatingButton"
+    );
+
+
+  if (!button) return;
+
+
+  button.innerHTML =
+    `❤️ المفضلة (${favorites.length})`;
+
+}
+
+
+/* =========================================================
+   BRAND QUICK FILTER
+========================================================= */
+
+function filterByBrand(brand) {
+
+  const brandFilter =
+    document.getElementById(
+      "brandFilter"
+    );
+
+
+  if (!brandFilter) return;
+
+
+  brandFilter.value =
+    brand;
+
+
+  filterDatabase();
+
+
+  const database =
+    document.getElementById(
+      "car-database"
+    );
+
+
+  if (database) {
+
+    database.scrollIntoView({
+      behavior: "smooth"
+    });
+
+  }
+
+}
+
+
+/* =========================================================
+   ADD COMPARE BUTTON TO CARDS
+========================================================= */
+
+function addCompareButtons() {
+
+  const cards =
+    document.querySelectorAll(
+      ".advanced-card"
+    );
+
+
+  cards.forEach(card => {
+
+    const button =
+      card.querySelector(
+        ".compare-car-button"
+      );
+
+
+    if (button) return;
+
+
+    const title =
+      card.querySelector("h3");
+
+
+    if (!title) return;
+
+
+    const name =
+      title.textContent.trim();
+
+
+    const car =
+      cars.find(item => {
+
+        const fullName =
+          `${item.brand} ${item.model}`;
+
+        return fullName === name;
+
+      });
+
+
+    if (!car) return;
+
+
+    const actions =
+      card.querySelector(
+        ".card-actions"
+      );
+
+
+    if (!actions) return;
+
+
+    const compareButton =
+      document.createElement(
+        "button"
+      );
+
+
+    compareButton.className =
+      "compare-car-button";
+
+
+    compareButton.textContent =
+      "⚖️ مقارنة";
+
+
+    compareButton.style.border =
+      "none";
+
+    compareButton.style.background =
+      "#f1f5f9";
+
+    compareButton.style.color =
+      "#111827";
+
+    compareButton.style.padding =
+      "10px";
+
+    compareButton.style.borderRadius =
+      "8px";
+
+    compareButton.style.cursor =
+      "pointer";
+
+
+    compareButton.onclick =
+      function() {
+
+        addToCompare(car.id);
+
+      };
+
+
+    actions.appendChild(
+      compareButton
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   UPDATE CARD FEATURES
+========================================================= */
+
+const oldRenderDatabase =
+  renderDatabase;
+
+
+renderDatabase =
+  function(list) {
+
+    oldRenderDatabase(list);
+
+    setTimeout(function() {
+
+      addCompareButtons();
+
+      updateFavoritesCount();
+
+    }, 50);
+
+  };
+
+
+/* =========================================================
+   CAR BRAND BUTTONS
+========================================================= */
+
+function activateBrandButtons() {
+
+  const brands =
+    document.querySelectorAll(
+      ".brand"
+    );
+
+
+  brands.forEach(button => {
+
+    if (
+      button.dataset.activated
+    ) {
+      return;
+    }
+
+
+    button.dataset.activated =
+      "true";
+
+
+    const span =
+      button.querySelector(
+        "span"
+      );
+
+
+    if (!span) return;
+
+
+    const brandName =
+      span.textContent.trim();
+
+
+    button.addEventListener(
+      "click",
+      function() {
+
+        filterByBrand(
+          brandName
+        );
+
+      }
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   QUICK CAR ANALYSIS BUTTON
+========================================================= */
+
+function addAnalysisButtons() {
+
+  const cards =
+    document.querySelectorAll(
+      ".advanced-card"
+    );
+
+
+  cards.forEach(card => {
+
+    if (
+      card.querySelector(
+        ".analysis-button"
+      )
+    ) {
+      return;
+    }
+
+
+    const title =
+      card.querySelector("h3");
+
+
+    if (!title) return;
+
+
+    const car =
+      cars.find(item =>
+        `${item.brand} ${item.model}`
+        ===
+        title.textContent.trim()
+      );
+
+
+    if (!car) return;
+
+
+    const actions =
+      card.querySelector(
+        ".card-actions"
+      );
+
+
+    if (!actions) return;
+
+
+    const button =
+      document.createElement(
+        "button"
+      );
+
+
+    button.className =
+      "analysis-button";
+
+
+    button.textContent =
+      "📊 تقييم";
+
+
+    button.style.border =
+      "none";
+
+    button.style.background =
+      "#fef3c7";
+
+    button.style.color =
+      "#92400e";
+
+    button.style.padding =
+      "10px";
+
+    button.style.borderRadius =
+      "8px";
+
+    button.style.cursor =
+      "pointer";
+
+
+    button.onclick =
+      function() {
+
+        analyzeCar(
+          car.id
+        );
+
+      };
+
+
+    actions.appendChild(
+      button
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   REFRESH ALL FEATURES
+========================================================= */
+
+function refreshCarFeatures() {
+
+  setTimeout(function() {
+
+    addCompareButtons();
+
+    addAnalysisButtons();
+
+    updateFavoritesCount();
+
+    activateBrandButtons();
+
+  }, 100);
+
+}
+
+
+/* =========================================================
+   OVERRIDE DATABASE RENDER
+========================================================= */
+
+const currentRenderDatabase =
+  renderDatabase;
+
+
+renderDatabase =
+  function(list) {
+
+    currentRenderDatabase(list);
+
+    refreshCarFeatures();
+
+  };
+
+
+/* =========================================================
+   CREATE WEBSITE TOOLS
+========================================================= */
+
+function initializePart4() {
+
+  loadFavorites();
+
+  createCalculators();
+
+  createFavoritesButton();
+
+  updateFavoritesCount();
+
+  activateBrandButtons();
+
+  refreshCarFeatures();
+
+  updateCompareBar();
+
+}
+
+
+/* =========================================================
+   START PART 4
+========================================================= */
+
+if (
+  document.readyState ===
+  "loading"
+) {
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    initializePart4
+  );
+
+} else {
+
+  initializePart4();
+
+}
+
+
+/* =========================================================
+   AUTO UPDATE FAVORITES
+========================================================= */
+
+setInterval(
+  function() {
+
+    updateFavoritesCount();
+
+  },
+  1000
+);
+
+
+/* =========================================================
+   IRAQ CARS PART 4 COMPLETE
+========================================================= */
 </script>
