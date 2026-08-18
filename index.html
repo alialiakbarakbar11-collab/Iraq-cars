@@ -1,3806 +1,1609 @@
-<script>
-
-/* ==================================================
-   IRAQ CARS - DATABASE SYSTEM
-================================================== */
-
-
-/* ==================================================
-   CAR DATABASE
-================================================== */
-
-const cars = [
-
-  {
-    id: 1,
-    brand: "Toyota",
-    model: "Camry",
-    year: 2024,
-    type: "سيدان",
-    fuel: "بنزين",
-    engine: "2.5L",
-    power: 203,
-    torque: 250,
-    transmission: "أوتوماتيك 8 سرعات",
-    drive: "FWD",
-    consumption: 15,
-    seats: 5,
-    price: 32,
-    emoji: "🚘"
-  },
-
-  {
-    id: 2,
-    brand: "Toyota",
-    model: "Land Cruiser",
-    year: 2024,
-    type: "SUV",
-    fuel: "بنزين",
-    engine: "3.5L Twin Turbo",
-    power: 409,
-    torque: 650,
-    transmission: "أوتوماتيك 10 سرعات",
-    drive: "4WD",
-    consumption: 8,
-    seats: 7,
-    price: 110,
-    emoji: "🚙"
-  },
-
-  {
-    id: 3,
-    brand: "BYD",
-    model: "Seal",
-    year: 2024,
-    type: "سيدان",
-    fuel: "كهربائية",
-    engine: "Electric",
-    power: 530,
-    torque: 670,
-    transmission: "أوتوماتيك",
-    drive: "AWD",
-    consumption: 0,
-    seats: 5,
-    price: 45,
-    emoji: "🏎️"
-  },
-
-  {
-    id: 4,
-    brand: "BMW",
-    model: "520i",
-    year: 2024,
-    type: "سيدان",
-    fuel: "بنزين",
-    engine: "2.0L Turbo",
-    power: 208,
-    torque: 330,
-    transmission: "أوتوماتيك 8 سرعات",
-    drive: "RWD",
-    consumption: 14,
-    seats: 5,
-    price: 65,
-    emoji: "🚘"
-  },
-
-  {
-    id: 5,
-    brand: "BMW",
-    model: "X5",
-    year: 2024,
-    type: "SUV",
-    fuel: "بنزين",
-    engine: "3.0L Turbo",
-    power: 375,
-    torque: 520,
-    transmission: "أوتوماتيك",
-    drive: "AWD",
-    consumption: 9,
-    seats: 5,
-    price: 95,
-    emoji: "🚙"
-  },
-
-  {
-    id: 6,
-    brand: "Mercedes-Benz",
-    model: "C200",
-    year: 2024,
-    type: "سيدان",
-    fuel: "بنزين",
-    engine: "1.5L Turbo",
-    power: 204,
-    torque: 300,
-    transmission: "أوتوماتيك 9 سرعات",
-    drive: "RWD",
-    consumption: 14,
-    seats: 5,
-    price: 62,
-    emoji: "🚘"
-  },
-
-  {
-    id: 7,
-    brand: "Hyundai",
-    model: "Sonata",
-    year: 2024,
-    type: "سيدان",
-    fuel: "بنزين",
-    engine: "2.5L",
-    power: 191,
-    torque: 245,
-    transmission: "أوتوماتيك",
-    drive: "FWD",
-    consumption: 13,
-    seats: 5,
-    price: 29,
-    emoji: "🚘"
-  },
-
-  {
-    id: 8,
-    brand: "Kia",
-    model: "K5",
-    year: 2024,
-    type: "سيدان",
-    fuel: "بنزين",
-    engine: "2.5L Turbo",
-    power: 290,
-    torque: 422,
-    transmission: "أوتوماتيك",
-    drive: "FWD",
-    consumption: 12,
-    seats: 5,
-    price: 31,
-    emoji: "🚘"
-  },
-
-  {
-    id: 9,
-    brand: "Nissan",
-    model: "Patrol",
-    year: 2024,
-    type: "SUV",
-    fuel: "بنزين",
-    engine: "5.6L V8",
-    power: 400,
-    torque: 560,
-    transmission: "أوتوماتيك",
-    drive: "4WD",
-    consumption: 7,
-    seats: 8,
-    price: 95,
-    emoji: "🚙"
-  },
-
-  {
-    id: 10,
-    brand: "Lexus",
-    model: "ES350",
-    year: 2024,
-    type: "سيدان",
-    fuel: "بنزين",
-    engine: "3.5L V6",
-    power: 302,
-    torque: 356,
-    transmission: "أوتوماتيك",
-    drive: "FWD",
-    consumption: 10,
-    seats: 5,
-    price: 60,
-    emoji: "🚘"
-  },
-
-  {
-    id: 11,
-    brand: "Toyota",
-    model: "Corolla",
-    year: 2024,
-    type: "سيدان",
-    fuel: "بنزين",
-    engine: "2.0L",
-    power: 169,
-    torque: 205,
-    transmission: "CVT",
-    drive: "FWD",
-    consumption: 16,
-    seats: 5,
-    price: 24,
-    emoji: "🚗"
-  },
-
-  {
-    id: 12,
-    brand: "BYD",
-    model: "Song Plus",
-    year: 2024,
-    type: "SUV",
-    fuel: "هايبرد",
-    engine: "1.5L Hybrid",
-    power: 218,
-    torque: 325,
-    transmission: "Automatic",
-    drive: "FWD",
-    consumption: 20,
-    seats: 5,
-    price: 30,
-    emoji: "🚙"
-  }
-
-];
-
-
-/* ==================================================
-   VARIABLES
-================================================== */
-
-let filteredCars = [...cars];
-
-let favorites = [];
-
-
-/* ==================================================
-   FORMAT PRICE
-================================================== */
-
-function formatPrice(price) {
-
-  if (!price) {
-    return "السعر غير متوفر";
-  }
-
-  return price + " مليون د.ع";
-
-}
-
-
-/* ==================================================
-   LOAD FILTERS
-================================================== */
-
-function loadFilters() {
-
-  const brandFilter =
-    document.getElementById("brandFilter");
-
-  const typeFilter =
-    document.getElementById("typeFilter");
-
-  const fuelFilter =
-    document.getElementById("fuelFilter");
-
-  const yearFilter =
-    document.getElementById("yearFilter");
-
-
-  if (!brandFilter) return;
-
-
-  const brands = [
-    ...new Set(
-      cars.map(car => car.brand)
-    )
-  ];
-
-
-  const types = [
-    ...new Set(
-      cars.map(car => car.type)
-    )
-  ];
-
-
-  const fuels = [
-    ...new Set(
-      cars.map(car => car.fuel)
-    )
-  ];
-
-
-  const years = [
-    ...new Set(
-      cars.map(car => car.year)
-    )
-  ];
-
-
-  brands.forEach(brand => {
-
-    brandFilter.innerHTML += `
-      <option value="${brand}">
-        ${brand}
-      </option>
-    `;
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 
-  });
+<head>
 
+  <meta charset="UTF-8">
 
-  types.forEach(type => {
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-    typeFilter.innerHTML += `
-      <option value="${type}">
-        ${type}
-      </option>
-    `;
+  <meta
+    name="description"
+    content="Iraq Cars - منصة السيارات العراقية للمواصفات والمقارنة والأسعار"
+  >
 
-  });
+  <title>Iraq Cars | منصة السيارات العراقية</title>
 
 
-  fuels.forEach(fuel => {
+  <style>
 
-    fuelFilter.innerHTML += `
-      <option value="${fuel}">
-        ${fuel}
-      </option>
-    `;
+    /* ==================================================
+       RESET
+    ================================================== */
 
-  });
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Tahoma, sans-serif;
+    }
 
 
-  years
-    .sort((a, b) => b - a)
-    .forEach(year => {
+    html {
+      scroll-behavior: smooth;
+    }
 
-      yearFilter.innerHTML += `
-        <option value="${year}">
-          ${year}
-        </option>
-      `;
 
-    });
+    body {
 
-}
+      background: #f5f7fb;
 
+      color: #111827;
 
-/* ==================================================
-   FILTER DATABASE
-================================================== */
-
-function filterDatabase() {
-
-  const search =
-    document
-      .getElementById("databaseSearch")
-      .value
-      .toLowerCase()
-      .trim();
-
-
-  const brand =
-    document.getElementById("brandFilter").value;
-
-
-  const type =
-    document.getElementById("typeFilter").value;
-
-
-  const fuel =
-    document.getElementById("fuelFilter").value;
-
-
-  const year =
-    document.getElementById("yearFilter").value;
-
-
-  const price =
-    document.getElementById("priceFilter").value;
-
-
-  const sort =
-    document.getElementById("sortFilter").value;
-
-
-  let result = cars.filter(car => {
-
-    const fullName =
-      `${car.brand} ${car.model}`.toLowerCase();
-
-
-    const matchesSearch =
-      !search ||
-      fullName.includes(search) ||
-      car.engine.toLowerCase().includes(search);
-
-
-    const matchesBrand =
-      !brand || car.brand === brand;
-
-
-    const matchesType =
-      !type || car.type === type;
-
-
-    const matchesFuel =
-      !fuel || car.fuel === fuel;
-
-
-    const matchesYear =
-      !year || String(car.year) === year;
-
-
-    let matchesPrice = true;
-
-
-    if (price === "under30") {
-
-      matchesPrice = car.price < 30;
+      line-height: 1.6;
 
     }
 
 
-    if (price === "30-60") {
+    button,
+    input,
+    select {
 
-      matchesPrice =
-        car.price >= 30 &&
-        car.price <= 60;
-
-    }
-
-
-    if (price === "60-100") {
-
-      matchesPrice =
-        car.price > 60 &&
-        car.price <= 100;
+      font-family: inherit;
 
     }
 
 
-    if (price === "over100") {
+    button {
 
-      matchesPrice = car.price > 100;
+      cursor: pointer;
 
     }
 
 
-    return (
-      matchesSearch &&
-      matchesBrand &&
-      matchesType &&
-      matchesFuel &&
-      matchesYear &&
-      matchesPrice
-    );
+    /* ==================================================
+       HEADER
+    ================================================== */
 
-  });
+    header {
 
+      background: #0f172a;
 
-  /* SORT */
+      color: white;
 
-  if (sort === "priceLow") {
+      position: sticky;
 
-    result.sort(
-      (a, b) => a.price - b.price
-    );
+      top: 0;
 
-  }
+      z-index: 1000;
 
-
-  if (sort === "priceHigh") {
-
-    result.sort(
-      (a, b) => b.price - a.price
-    );
-
-  }
-
-
-  if (sort === "powerHigh") {
-
-    result.sort(
-      (a, b) => b.power - a.power
-    );
-
-  }
-
-
-  if (sort === "yearNew") {
-
-    result.sort(
-      (a, b) => b.year - a.year
-    );
-
-  }
-
-
-  filteredCars = result;
-
-  renderDatabase(result);
-
-}
-
-
-/* ==================================================
-   RENDER CARS
-================================================== */
-
-function renderDatabase(list) {
-
-  const grid =
-    document.getElementById("databaseGrid");
-
-
-  const count =
-    document.getElementById("resultsCount");
-
-
-  if (!grid) return;
-
-
-  if (count) {
-
-    count.textContent =
-      `تم العثور على ${list.length} سيارة`;
-
-  }
-
-
-  if (list.length === 0) {
-
-    grid.innerHTML = `
-
-      <div class="no-results">
-
-        <div>🔍</div>
-
-        <h3>
-          ما لقينا سيارة بهذا البحث
-        </h3>
-
-        <p style="color:#64748b;">
-          جرّب تغير الشركة أو النوع أو السعر.
-        </p>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  grid.innerHTML = list.map(car => {
-
-    const isFavorite =
-      favorites.includes(car.id);
-
-
-    return `
-
-      <div class="advanced-card">
-
-        <div class="advanced-image">
-          ${car.emoji}
-        </div>
-
-
-        <div class="advanced-info">
-
-          <h3>
-            ${car.brand} ${car.model}
-          </h3>
-
-
-          <div class="car-subtitle">
-
-            ${car.year}
-            •
-            ${car.type}
-            •
-            ${car.fuel}
-
-          </div>
-
-
-          <div class="spec-list">
-
-            <div class="spec-item">
-
-              <strong>
-                المحرك
-              </strong>
-
-              ${car.engine}
-
-            </div>
-
-
-            <div class="spec-item">
-
-              <strong>
-                القوة
-              </strong>
-
-              ${car.power} HP
-
-            </div>
-
-
-            <div class="spec-item">
-
-              <strong>
-                القير
-              </strong>
-
-              ${car.transmission}
-
-            </div>
-
-
-            <div class="spec-item">
-
-              <strong>
-                الدفع
-              </strong>
-
-              ${car.drive}
-
-            </div>
-
-
-            <div class="spec-item">
-
-              <strong>
-                المقاعد
-              </strong>
-
-              ${car.seats}
-
-            </div>
-
-
-            <div class="spec-item">
-
-              <strong>
-                الصرفية
-              </strong>
-
-              ${
-                car.consumption
-                ? car.consumption + " كم/لتر"
-                : "كهربائية"
-              }
-
-            </div>
-
-          </div>
-
-
-          <div
-            class="car-price"
-            style="margin-bottom:15px;"
-          >
-
-            ${formatPrice(car.price)}
-
-          </div>
-
-
-          <div class="card-actions">
-
-            <button
-              class="details-button"
-              onclick="showCarDetails(${car.id})"
-            >
-
-              التفاصيل
-
-            </button>
-
-
-            <button
-              class="favorite-button"
-              onclick="toggleFavorite(${car.id})"
-            >
-
-              ${
-                isFavorite
-                ? "❤️ محفوظة"
-                : "♡ المفضلة"
-              }
-
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    `;
-
-  }).join("");
-
-}
-
-
-/* ==================================================
-   CAR DETAILS
-================================================== */
-
-function showCarDetails(id) {
-
-  const car =
-    cars.find(item => item.id === id);
-
-
-  if (!car) return;
-
-
-  const modal =
-    document.getElementById("carModal");
-
-
-  const content =
-    document.getElementById("modalContent");
-
-
-  if (!modal || !content) {
-
-    alert(
-      "قسم تفاصيل السيارة لم تتم إضافته بعد."
-    );
-
-    return;
-
-  }
-
-
-  content.innerHTML = `
-
-    <button
-      onclick="closeModal()"
-      style="
-        position:absolute;
-        top:15px;
-        left:15px;
-        border:none;
-        background:#f1f5f9;
-        width:40px;
-        height:40px;
-        border-radius:50%;
-        font-size:18px;
-      "
-    >
-      ✕
-    </button>
-
-
-    <div style="
-      text-align:center;
-      font-size:90px;
-      margin-bottom:10px;
-    ">
-
-      ${car.emoji}
-
-    </div>
-
-
-    <h2 style="
-      text-align:center;
-      margin-bottom:5px;
-    ">
-
-      ${car.brand} ${car.model}
-
-    </h2>
-
-
-    <p style="
-      text-align:center;
-      color:#64748b;
-      margin-bottom:25px;
-    ">
-
-      ${car.year}
-      •
-      ${car.type}
-      •
-      ${car.fuel}
-
-    </p>
-
-
-    <div class="spec-list">
-
-      <div class="spec-item">
-        <strong>المحرك</strong>
-        ${car.engine}
-      </div>
-
-      <div class="spec-item">
-        <strong>القوة</strong>
-        ${car.power} حصان
-      </div>
-
-      <div class="spec-item">
-        <strong>العزم</strong>
-        ${car.torque} Nm
-      </div>
-
-      <div class="spec-item">
-        <strong>القير</strong>
-        ${car.transmission}
-      </div>
-
-      <div class="spec-item">
-        <strong>الدفع</strong>
-        ${car.drive}
-      </div>
-
-      <div class="spec-item">
-        <strong>المقاعد</strong>
-        ${car.seats}
-      </div>
-
-    </div>
-
-
-    <div style="
-      background:#eff6ff;
-      padding:18px;
-      border-radius:12px;
-      margin-top:20px;
-      text-align:center;
-    ">
-
-      <strong style="
-        color:#2563eb;
-        font-size:22px;
-      ">
-
-        ${formatPrice(car.price)}
-
-      </strong>
-
-      <p style="
-        color:#64748b;
-        font-size:12px;
-        margin-top:5px;
-      ">
-
-        السعر تجريبي حالياً
-
-      </p>
-
-    </div>
-
-  `;
-
-
-  modal.style.display = "block";
-
-  document.body.style.overflow = "hidden";
-
-}
-
-
-/* ==================================================
-   CLOSE MODAL
-================================================== */
-
-function closeModal() {
-
-  const modal =
-    document.getElementById("carModal");
-
-
-  if (!modal) return;
-
-
-  modal.style.display = "none";
-
-  document.body.style.overflow = "auto";
-
-}
-
-
-/* ==================================================
-   FAVORITES
-================================================== */
-
-function toggleFavorite(id) {
-
-  const index =
-    favorites.indexOf(id);
-
-
-  if (index === -1) {
-
-    favorites.push(id);
-
-  } else {
-
-    favorites.splice(index, 1);
-
-  }
-
-
-  renderDatabase(filteredCars);
-
-}
-
-
-/* ==================================================
-   RESET FILTERS
-================================================== */
-
-function resetFilters() {
-
-  const ids = [
-
-    "databaseSearch",
-    "brandFilter",
-    "typeFilter",
-    "fuelFilter",
-    "yearFilter",
-    "priceFilter",
-    "sortFilter"
-
-  ];
-
-
-  ids.forEach(id => {
-
-    const element =
-      document.getElementById(id);
-
-
-    if (element) {
-
-      element.value = "";
+      box-shadow:
+        0 4px 20px rgba(0,0,0,.15);
 
     }
 
-  });
+
+    .navbar {
+
+      max-width: 1200px;
+
+      margin: auto;
+
+      min-height: 70px;
+
+      padding: 0 20px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 20px;
+
+    }
 
 
-  filterDatabase();
+    .logo {
 
-}
+      color: white;
 
+      text-decoration: none;
 
-/* ==================================================
-   HERO SEARCH
-================================================== */
+      font-size: 25px;
 
-function searchCars() {
+      font-weight: 800;
 
-  const input =
-    document.getElementById("searchInput");
+      white-space: nowrap;
 
-
-  const databaseSearch =
-    document.getElementById("databaseSearch");
+    }
 
 
-  if (!input) return;
+    .logo span {
+
+      color: #3b82f6;
+
+    }
 
 
-  const value =
-    input.value.trim();
+    .nav-links {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 25px;
+
+      list-style: none;
+
+    }
 
 
-  if (databaseSearch) {
+    .nav-links a {
 
-    databaseSearch.value = value;
+      color: #e2e8f0;
 
-    filterDatabase();
+      text-decoration: none;
 
-  }
+      font-size: 14px;
 
+      transition: .2s;
 
-  const database =
-    document.getElementById("car-database");
-
-
-  if (database) {
-
-    database.scrollIntoView({
-      behavior: "smooth"
-    });
-
-  }
-
-}
+    }
 
 
-/* ==================================================
-   DARK MODE
-================================================== */
+    .nav-links a:hover {
 
-function toggleTheme() {
+      color: #60a5fa;
 
-  document.body.classList.toggle(
-    "dark-mode"
-  );
+    }
 
 
-  const isDark =
-    document.body.classList.contains(
-      "dark-mode"
-    );
+    .nav-button {
+
+      border: none;
+
+      background: #1e293b;
+
+      color: white;
+
+      width: 42px;
+
+      height: 42px;
+
+      border-radius: 10px;
+
+      font-size: 18px;
+
+    }
 
 
-  if (isDark) {
+    /* ==================================================
+       HERO
+    ================================================== */
 
-    document.body.style.background =
-      "#020617";
+    .hero {
 
-    document.body.style.color =
-      "#f8fafc";
+      min-height: 520px;
 
-  } else {
+      background:
+        linear-gradient(
+          135deg,
+          #0f172a 0%,
+          #172554 45%,
+          #2563eb 100%
+        );
 
-    document.body.style.background =
-      "#f5f7fb";
+      color: white;
 
-    document.body.style.color =
-      "#111827";
+      display: flex;
 
-  }
+      align-items: center;
 
-}
+      text-align: center;
 
+      padding: 70px 20px;
 
-/* ==================================================
-   MODAL OUTSIDE CLICK
-================================================== */
-
-const carModal =
-  document.getElementById("carModal");
+    }
 
 
-if (carModal) {
+    .hero-content {
 
-  carModal.addEventListener(
-    "click",
-    function(event) {
+      max-width: 900px;
 
-      if (event.target === this) {
+      width: 100%;
 
-        closeModal();
+      margin: auto;
+
+    }
+
+
+    .hero-badge {
+
+      display: inline-block;
+
+      background: rgba(255,255,255,.1);
+
+      border: 1px solid rgba(255,255,255,.15);
+
+      padding: 8px 15px;
+
+      border-radius: 30px;
+
+      margin-bottom: 20px;
+
+      font-size: 13px;
+
+    }
+
+
+    .hero h1 {
+
+      font-size: clamp(36px, 7vw, 65px);
+
+      line-height: 1.2;
+
+      margin-bottom: 18px;
+
+    }
+
+
+    .hero h1 span {
+
+      color: #60a5fa;
+
+    }
+
+
+    .hero p {
+
+      color: #dbeafe;
+
+      font-size: 18px;
+
+      max-width: 700px;
+
+      margin: 0 auto 30px;
+
+    }
+
+
+    /* ==================================================
+       SEARCH
+    ================================================== */
+
+    .search-box {
+
+      max-width: 750px;
+
+      margin: auto;
+
+      background: white;
+
+      border-radius: 15px;
+
+      padding: 7px;
+
+      display: flex;
+
+      box-shadow:
+        0 15px 40px rgba(0,0,0,.2);
+
+    }
+
+
+    .search-box input {
+
+      flex: 1;
+
+      border: none;
+
+      outline: none;
+
+      padding: 16px;
+
+      font-size: 16px;
+
+      color: #111827;
+
+      background: transparent;
+
+      text-align: right;
+
+    }
+
+
+    .search-button {
+
+      border: none;
+
+      background: #2563eb;
+
+      color: white;
+
+      padding: 0 25px;
+
+      border-radius: 10px;
+
+      font-size: 15px;
+
+      font-weight: bold;
+
+    }
+
+
+    /* ==================================================
+       MAIN CONTAINER
+    ================================================== */
+
+    .container {
+
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 55px 20px;
+
+    }
+
+
+    .section-title {
+
+      text-align: center;
+
+      margin-bottom: 30px;
+
+    }
+
+
+    .section-title h2 {
+
+      font-size: 30px;
+
+      margin-bottom: 8px;
+
+    }
+
+
+    .section-title p {
+
+      color: #64748b;
+
+      font-size: 15px;
+
+    }
+
+
+    /* ==================================================
+       QUICK STATS
+    ================================================== */
+
+    .stats {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 15px;
+
+      margin-top: -45px;
+
+      position: relative;
+
+      z-index: 10;
+
+    }
+
+
+    .stat-card {
+
+      background: white;
+
+      border-radius: 16px;
+
+      padding: 25px 15px;
+
+      text-align: center;
+
+      box-shadow:
+        0 7px 25px rgba(15,23,42,.08);
+
+    }
+
+
+    .stat-icon {
+
+      font-size: 30px;
+
+      margin-bottom: 8px;
+
+    }
+
+
+    .stat-card strong {
+
+      display: block;
+
+      font-size: 25px;
+
+      color: #2563eb;
+
+    }
+
+
+    .stat-card span {
+
+      color: #64748b;
+
+      font-size: 13px;
+
+    }
+
+
+    /* ==================================================
+       FEATURES
+    ================================================== */
+
+    .features {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 18px;
+
+    }
+
+
+    .feature-card {
+
+      background: white;
+
+      padding: 28px 20px;
+
+      border-radius: 17px;
+
+      box-shadow:
+        0 5px 20px rgba(15,23,42,.06);
+
+      transition: .25s;
+
+    }
+
+
+    .feature-card:hover {
+
+      transform: translateY(-6px);
+
+    }
+
+
+    .feature-icon {
+
+      width: 55px;
+
+      height: 55px;
+
+      border-radius: 14px;
+
+      background: #eff6ff;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 28px;
+
+      margin-bottom: 17px;
+
+    }
+
+
+    .feature-card h3 {
+
+      margin-bottom: 8px;
+
+      font-size: 18px;
+
+    }
+
+
+    .feature-card p {
+
+      color: #64748b;
+
+      font-size: 14px;
+
+    }
+
+
+    /* ==================================================
+       POPULAR CARS
+    ================================================== */
+
+    .cars-grid {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 20px;
+
+    }
+
+
+    .car-card {
+
+      background: white;
+
+      border-radius: 18px;
+
+      overflow: hidden;
+
+      box-shadow:
+        0 5px 20px rgba(15,23,42,.07);
+
+      transition: .25s;
+
+    }
+
+
+    .car-card:hover {
+
+      transform: translateY(-5px);
+
+    }
+
+
+    .car-image {
+
+      height: 190px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #dbeafe,
+          #bfdbfe
+        );
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 80px;
+
+    }
+
+
+    .car-info {
+
+      padding: 20px;
+
+    }
+
+
+    .car-info h3 {
+
+      font-size: 20px;
+
+      margin-bottom: 5px;
+
+    }
+
+
+    .car-info p {
+
+      color: #64748b;
+
+      font-size: 14px;
+
+      margin-bottom: 12px;
+
+    }
+
+
+    .car-tags {
+
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 6px;
+
+      margin-bottom: 15px;
+
+    }
+
+
+    .tag {
+
+      background: #eff6ff;
+
+      color: #2563eb;
+
+      padding: 5px 9px;
+
+      border-radius: 7px;
+
+      font-size: 12px;
+
+    }
+
+
+    .car-price {
+
+      color: #2563eb;
+
+      font-size: 18px;
+
+      font-weight: bold;
+
+    }
+
+
+    /* ==================================================
+       BRANDS
+    ================================================== */
+
+    .brands {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(6, 1fr);
+
+      gap: 12px;
+
+    }
+
+
+    .brand {
+
+      background: white;
+
+      border: none;
+
+      border-radius: 14px;
+
+      padding: 20px 10px;
+
+      text-align: center;
+
+      box-shadow:
+        0 4px 15px rgba(15,23,42,.05);
+
+      transition: .2s;
+
+    }
+
+
+    .brand:hover {
+
+      transform: translateY(-4px);
+
+      color: #2563eb;
+
+    }
+
+
+    .brand-logo {
+
+      width: 48px;
+
+      height: 48px;
+
+      background: #eff6ff;
+
+      color: #2563eb;
+
+      border-radius: 50%;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      margin: auto auto 10px;
+
+      font-weight: bold;
+
+      font-size: 20px;
+
+    }
+
+
+    .brand span {
+
+      font-size: 13px;
+
+      font-weight: bold;
+
+    }
+
+
+    /* ==================================================
+       FOOTER
+    ================================================== */
+
+    footer {
+
+      background: #0f172a;
+
+      color: white;
+
+      padding: 45px 20px;
+
+      text-align: center;
+
+      margin-top: 20px;
+
+    }
+
+
+    footer h2 {
+
+      margin-bottom: 8px;
+
+    }
+
+
+    footer p {
+
+      color: #94a3b8;
+
+      font-size: 14px;
+
+    }
+
+
+    /* ==================================================
+       MOBILE
+    ================================================== */
+
+    @media (max-width: 900px) {
+
+      .nav-links {
+
+        display: none;
+
+      }
+
+
+      .stats {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+      }
+
+
+      .features {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+      }
+
+
+      .cars-grid {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+      }
+
+
+      .brands {
+
+        grid-template-columns:
+          repeat(3, 1fr);
 
       }
 
     }
-  );
-
-}
 
 
-/* ==================================================
-   START WEBSITE
-================================================== */
+    @media (max-width: 600px) {
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
+      .hero {
 
-    loadFilters();
+        min-height: 500px;
 
-    renderDatabase(cars);
+        padding: 55px 15px;
 
-  }
-);
-/* =========================================================
-   IRAQ CARS - PART 3
-   FAVORITES + COMPARE + FUEL + INSTALLMENT
-========================================================= */
+      }
 
 
-/* =========================================================
-   FAVORITES STORAGE
-========================================================= */
+      .hero p {
 
-function saveFavorites() {
+        font-size: 15px;
 
-  localStorage.setItem(
-    "iraqCarsFavorites",
-    JSON.stringify(favorites)
-  );
-
-}
+      }
 
 
-function loadFavorites() {
+      .search-box {
 
-  try {
+        flex-direction: column;
 
-    const saved =
-      localStorage.getItem(
-        "iraqCarsFavorites"
-      );
+        gap: 6px;
 
-    if (saved) {
+      }
 
-      favorites =
-        JSON.parse(saved);
+
+      .search-button {
+
+        padding: 14px;
+
+      }
+
+
+      .stats {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+      }
+
+
+      .features,
+
+      .cars-grid {
+
+        grid-template-columns: 1fr;
+
+      }
+
+
+      .brands {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+      }
+
+
+      .container {
+
+        padding: 40px 15px;
+
+      }
 
     }
 
-  } catch (error) {
+  </style>
 
-    favorites = [];
+</head>
 
-  }
 
-}
+<body>
 
 
-/* =========================================================
-   UPDATE FAVORITES
-========================================================= */
+  <!-- ==================================================
+       HEADER
+  ================================================== -->
 
-function toggleFavorite(id) {
+  <header>
 
-  const index =
-    favorites.indexOf(id);
+    <nav class="navbar">
 
-  if (index === -1) {
+      <a href="#" class="logo">
+        🚘 <span>Iraq</span> Cars
+      </a>
 
-    favorites.push(id);
 
-    showMessage(
-      "❤️ تمت إضافة السيارة للمفضلة"
-    );
+      <ul class="nav-links">
 
-  } else {
+        <li>
+          <a href="#home">
+            الرئيسية
+          </a>
+        </li>
 
-    favorites.splice(index, 1);
+        <li>
+          <a href="#services">
+            الخدمات
+          </a>
+        </li>
 
-    showMessage(
-      "تم حذف السيارة من المفضلة"
-    );
+        <li>
+          <a href="#cars">
+            السيارات
+          </a>
+        </li>
 
-  }
+        <li>
+          <a href="#brands">
+            الشركات
+          </a>
+        </li>
 
-  saveFavorites();
+      </ul>
 
-  renderDatabase(filteredCars);
 
-}
+      <button
+        class="nav-button"
+        onclick="toggleTheme()"
+        title="تغيير المظهر"
+      >
+        🌙
+      </button>
 
+    </nav>
 
-/* =========================================================
-   MESSAGE SYSTEM
-========================================================= */
+  </header>
 
-function showMessage(message) {
 
-  let box =
-    document.getElementById(
-      "iraqMessage"
-    );
+  <!-- ==================================================
+       HERO
+  ================================================== -->
 
+  <section class="hero" id="home">
 
-  if (!box) {
+    <div class="hero-content">
 
-    box =
-      document.createElement("div");
+      <div class="hero-badge">
+        🇮🇶 منصة السيارات العراقية
+      </div>
 
-    box.id =
-      "iraqMessage";
 
+      <h1>
 
-    box.style.position =
-      "fixed";
+        كل السيارات
+        <br>
 
-    box.style.bottom =
-      "25px";
+        <span>بمكان واحد</span>
 
-    box.style.left =
-      "50%";
+      </h1>
 
-    box.style.transform =
-      "translateX(-50%)";
 
-    box.style.background =
-      "#111827";
+      <p>
 
-    box.style.color =
-      "#ffffff";
+        ابحث عن السيارة المناسبة،
+        اعرف مواصفاتها،
+        وقارنها مع غيرها قبل الشراء.
 
-    box.style.padding =
-      "14px 22px";
+      </p>
 
-    box.style.borderRadius =
-      "12px";
 
-    box.style.zIndex =
-      "99999";
+      <div class="search-box">
 
-    box.style.fontSize =
-      "14px";
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="ابحث عن Toyota Camry أو BMW أو BYD..."
+        >
 
-    box.style.boxShadow =
-      "0 10px 30px rgba(0,0,0,.25)";
 
-    box.style.transition =
-      "all .3s ease";
+        <button
+          class="search-button"
+          onclick="searchCars()"
+        >
 
+          🔍 بحث
 
-    document.body.appendChild(box);
+        </button>
 
-  }
+      </div>
 
+    </div>
 
-  box.textContent =
-    message;
+  </section>
 
 
-  box.style.opacity =
-    "1";
+  <!-- ==================================================
+       STATS
+  ================================================== -->
 
+  <section class="container">
 
-  clearTimeout(
-    window.iraqMessageTimer
-  );
+    <div class="stats">
 
 
-  window.iraqMessageTimer =
-    setTimeout(function() {
+      <div class="stat-card">
 
-      box.style.opacity =
-        "0";
+        <div class="stat-icon">
+          🚘
+        </div>
 
-    }, 2200);
-
-}
-
-
-/* =========================================================
-   GET FAVORITES
-========================================================= */
-
-function getFavoriteCars() {
-
-  return cars.filter(
-    car =>
-      favorites.includes(car.id)
-  );
-
-}
-
-
-/* =========================================================
-   SHOW FAVORITES
-========================================================= */
-
-function showFavorites() {
-
-  const list =
-    getFavoriteCars();
-
-
-  if (list.length === 0) {
-
-    showMessage(
-      "ما عندك سيارات بالمفضلة ❤️"
-    );
-
-    return;
-
-  }
-
-
-  renderDatabase(list);
-
-
-  const database =
-    document.getElementById(
-      "car-database"
-    );
-
-
-  if (database) {
-
-    database.scrollIntoView({
-      behavior: "smooth"
-    });
-
-  }
-
-}
-
-
-/* =========================================================
-   COMPARE SYSTEM
-========================================================= */
-
-let compareCars = [];
-
-
-function addToCompare(id) {
-
-  const car =
-    cars.find(
-      item => item.id === id
-    );
-
-
-  if (!car) return;
-
-
-  if (
-    compareCars.some(
-      item => item.id === id
-    )
-  ) {
-
-    showMessage(
-      "السيارة موجودة بالمقارنة"
-    );
-
-    return;
-
-  }
-
-
-  if (compareCars.length >= 3) {
-
-    showMessage(
-      "تقدر تقارن 3 سيارات فقط"
-    );
-
-    return;
-
-  }
-
-
-  compareCars.push(car);
-
-
-  showMessage(
-    "⚖️ تمت إضافة السيارة للمقارنة"
-  );
-
-
-  updateCompareBar();
-
-}
-
-
-/* =========================================================
-   REMOVE FROM COMPARE
-========================================================= */
-
-function removeFromCompare(id) {
-
-  compareCars =
-    compareCars.filter(
-      car => car.id !== id
-    );
-
-
-  updateCompareBar();
-
-}
-
-
-/* =========================================================
-   CLEAR COMPARE
-========================================================= */
-
-function clearCompare() {
-
-  compareCars = [];
-
-  updateCompareBar();
-
-}
-
-
-/* =========================================================
-   COMPARE BAR
-========================================================= */
-
-function updateCompareBar() {
-
-  let bar =
-    document.getElementById(
-      "compareBar"
-    );
-
-
-  if (!bar) {
-
-    bar =
-      document.createElement("div");
-
-    bar.id =
-      "compareBar";
-
-
-    bar.style.position =
-      "fixed";
-
-    bar.style.bottom =
-      "0";
-
-    bar.style.left =
-      "0";
-
-    bar.style.right =
-      "0";
-
-    bar.style.background =
-      "#111827";
-
-    bar.style.color =
-      "white";
-
-    bar.style.padding =
-      "12px";
-
-    bar.style.zIndex =
-      "9000";
-
-    bar.style.boxShadow =
-      "0 -5px 25px rgba(0,0,0,.25)";
-
-
-    document.body.appendChild(bar);
-
-  }
-
-
-  if (compareCars.length === 0) {
-
-    bar.innerHTML = "";
-
-    bar.style.display =
-      "none";
-
-    return;
-
-  }
-
-
-  bar.style.display =
-    "block";
-
-
-  let names =
-    compareCars.map(
-      car =>
-        `${car.brand} ${car.model}`
-    ).join(" • ");
-
-
-  bar.innerHTML = `
-
-    <div style="
-      max-width:1000px;
-      margin:auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    ">
-
-      <div>
-
-        ⚖️
         <strong>
-          المقارنة
+          300+
         </strong>
 
-        <span style="
-          color:#cbd5e1;
-          margin-right:8px;
-        ">
-          ${names}
+        <span>
+          سيارة
         </span>
 
       </div>
 
 
-      <div style="
-        display:flex;
-        gap:8px;
-        flex-wrap:wrap;
-      ">
+      <div class="stat-card">
 
-        <button
-          onclick="showComparison()"
-          style="
-            border:none;
-            background:#2563eb;
-            color:white;
-            padding:10px 16px;
-            border-radius:9px;
-            cursor:pointer;
-          "
-        >
-          ⚖️ قارن الآن
-        </button>
+        <div class="stat-icon">
+          🏷️
+        </div>
 
+        <strong>
+          50+
+        </strong>
 
-        <button
-          onclick="clearCompare()"
-          style="
-            border:none;
-            background:#374151;
-            color:white;
-            padding:10px 16px;
-            border-radius:9px;
-            cursor:pointer;
-          "
-        >
-          مسح
-        </button>
+        <span>
+          شركة
+        </span>
 
       </div>
 
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          📊
+        </div>
+
+        <strong>
+          300+
+        </strong>
+
+        <span>
+          معلومة
+        </span>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          🇮🇶
+        </div>
+
+        <strong>
+          Iraq
+        </strong>
+
+        <span>
+          سوق السيارات
+        </span>
+
+      </div>
+
+
     </div>
 
-  `;
-
-}
+  </section>
 
 
-/* =========================================================
-   COMPARISON MODAL
-========================================================= */
+  <!-- ==================================================
+       SERVICES
+  ================================================== -->
 
-function showComparison() {
+  <section
+    class="container"
+    id="services"
+  >
 
-  if (compareCars.length < 2) {
+    <div class="section-title">
 
-    showMessage(
-      "اختار سيارتين على الأقل للمقارنة"
-    );
+      <h2>
+        خدمات Iraq Cars
+      </h2>
 
-    return;
+      <p>
+        كل الأدوات اللي تحتاجها حتى تعرف السيارة بشكل أفضل
+      </p>
 
-  }
-
-
-  let modal =
-    document.getElementById(
-      "comparisonModal"
-    );
-
-
-  if (!modal) {
-
-    modal =
-      document.createElement("div");
-
-    modal.id =
-      "comparisonModal";
+    </div>
 
 
-    modal.style.position =
-      "fixed";
-
-    modal.style.inset =
-      "0";
-
-    modal.style.background =
-      "rgba(0,0,0,.7)";
-
-    modal.style.zIndex =
-      "10000";
-
-    modal.style.overflow =
-      "auto";
-
-    modal.style.padding =
-      "20px";
+    <div class="features">
 
 
-    document.body.appendChild(
-      modal
-    );
+      <div class="feature-card">
 
-  }
+        <div class="feature-icon">
+          🚗
+        </div>
 
+        <h3>
+          دليل السيارات
+        </h3>
 
-  let columns =
-    compareCars.map(
-      car => `
+        <p>
+          معلومات ومواصفات السيارات
+          بمختلف الشركات والموديلات.
+        </p>
 
-        <div style="
-          min-width:220px;
-          flex:1;
-          background:white;
-          border-radius:15px;
-          padding:18px;
-          color:#111827;
-        ">
-
-          <div style="
-            font-size:55px;
-            text-align:center;
-          ">
-            ${car.emoji}
-          </div>
+      </div>
 
 
-          <h3 style="
-            text-align:center;
-            margin:10px 0;
-          ">
-            ${car.brand}
-            ${car.model}
+      <div class="feature-card">
+
+        <div class="feature-icon">
+          ⚖️
+        </div>
+
+        <h3>
+          مقارنة السيارات
+        </h3>
+
+        <p>
+          قارن بين سيارتين أو أكثر
+          وشوف الفرق بالمواصفات.
+        </p>
+
+      </div>
+
+
+      <div class="feature-card">
+
+        <div class="feature-icon">
+          ⛽
+        </div>
+
+        <h3>
+          حاسبة الوقود
+        </h3>
+
+        <p>
+          احسب تكلفة البنزين
+          اليومية والشهرية والسنوية.
+        </p>
+
+      </div>
+
+
+      <div class="feature-card">
+
+        <div class="feature-icon">
+          💳
+        </div>
+
+        <h3>
+          حاسبة الأقساط
+        </h3>
+
+        <p>
+          احسب القسط الشهري
+          والتكلفة الإجمالية للسيارة.
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- ==================================================
+       POPULAR CARS
+  ================================================== -->
+
+  <section
+    class="container"
+    id="cars"
+  >
+
+    <div class="section-title">
+
+      <h2>
+        🔥 سيارات مشهورة
+      </h2>
+
+      <p>
+        نماذج مختارة كبداية للموقع
+      </p>
+
+    </div>
+
+
+    <div class="cars-grid">
+
+
+      <!-- CAR 1 -->
+
+      <div class="car-card">
+
+        <div class="car-image">
+          🚘
+        </div>
+
+        <div class="car-info">
+
+          <h3>
+            Toyota Camry
           </h3>
 
+          <p>
+            سيدان • بنزين • 2024
+          </p>
 
-          <div style="
-            line-height:2;
-            font-size:14px;
-          ">
+          <div class="car-tags">
 
-            <p>
-              📅 السنة:
-              <strong>${car.year}</strong>
-            </p>
+            <span class="tag">
+              2.5L
+            </span>
 
-            <p>
-              🔧 المحرك:
-              <strong>${car.engine}</strong>
-            </p>
+            <span class="tag">
+              203 HP
+            </span>
 
-            <p>
-              ⚡ القوة:
-              <strong>${car.power} HP</strong>
-            </p>
-
-            <p>
-              🔥 العزم:
-              <strong>${car.torque} Nm</strong>
-            </p>
-
-            <p>
-              ⚙️ القير:
-              <strong>${car.transmission}</strong>
-            </p>
-
-            <p>
-              🚙 الدفع:
-              <strong>${car.drive}</strong>
-            </p>
-
-            <p>
-              🪑 المقاعد:
-              <strong>${car.seats}</strong>
-            </p>
-
-            <p>
-              ⛽ الوقود:
-              <strong>${car.fuel}</strong>
-            </p>
-
-            <p>
-              💰 السعر:
-              <strong>
-                ${formatPrice(car.price)}
-              </strong>
-            </p>
+            <span class="tag">
+              أوتوماتيك
+            </span>
 
           </div>
 
-
-          <button
-            onclick="removeFromCompare(${car.id});showComparison();"
-            style="
-              width:100%;
-              border:none;
-              background:#fee2e2;
-              color:#991b1b;
-              padding:10px;
-              border-radius:9px;
-              cursor:pointer;
-              margin-top:10px;
-            "
-          >
-            حذف من المقارنة
-          </button>
+          <div class="car-price">
+            السعر: قريباً
+          </div>
 
         </div>
 
-      `
-    ).join("");
+      </div>
 
 
-  modal.innerHTML = `
+      <!-- CAR 2 -->
 
-    <div style="
-      max-width:1100px;
-      margin:40px auto;
-      background:#f8fafc;
-      border-radius:20px;
-      padding:20px;
-    ">
+      <div class="car-card">
 
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        margin-bottom:20px;
-      ">
+        <div class="car-image">
+          🚙
+        </div>
 
-        <h2>
-          ⚖️ مقارنة السيارات
-        </h2>
+        <div class="car-info">
 
+          <h3>
+            Toyota Land Cruiser
+          </h3>
 
-        <button
-          onclick="closeComparison()"
-          style="
-            border:none;
-            background:#e5e7eb;
-            width:40px;
-            height:40px;
-            border-radius:50%;
-            cursor:pointer;
-            font-size:18px;
-          "
-        >
-          ✕
-        </button>
+          <p>
+            SUV • بنزين • 2024
+          </p>
+
+          <div class="car-tags">
+
+            <span class="tag">
+              3.5L Twin Turbo
+            </span>
+
+            <span class="tag">
+              409 HP
+            </span>
+
+            <span class="tag">
+              4WD
+            </span>
+
+          </div>
+
+          <div class="car-price">
+            السعر: قريباً
+          </div>
+
+        </div>
 
       </div>
 
 
-      <div style="
-        display:flex;
-        gap:15px;
-        overflow-x:auto;
-      ">
+      <!-- CAR 3 -->
 
-        ${columns}
+      <div class="car-card">
+
+        <div class="car-image">
+          🏎️
+        </div>
+
+        <div class="car-info">
+
+          <h3>
+            BYD Seal
+          </h3>
+
+          <p>
+            سيدان • كهربائية • 2024
+          </p>
+
+          <div class="car-tags">
+
+            <span class="tag">
+              كهربائية
+            </span>
+
+            <span class="tag">
+              530 HP
+            </span>
+
+            <span class="tag">
+              AWD
+            </span>
+
+          </div>
+
+          <div class="car-price">
+            السعر: قريباً
+          </div>
+
+        </div>
 
       </div>
 
-    </div>
-
-  `;
-
-}
-
-
-/* =========================================================
-   CLOSE COMPARISON
-========================================================= */
-
-function closeComparison() {
-
-  const modal =
-    document.getElementById(
-      "comparisonModal"
-    );
-
-
-  if (modal) {
-
-    modal.remove();
-
-  }
-
-}
-
-
-/* =========================================================
-   FUEL CALCULATOR
-========================================================= */
-
-function calculateFuel() {
-
-  const distance =
-    Number(
-      document.getElementById(
-        "fuelDistance"
-      )?.value
-    );
-
-
-  const consumption =
-    Number(
-      document.getElementById(
-        "fuelConsumption"
-      )?.value
-    );
-
-
-  const fuelPrice =
-    Number(
-      document.getElementById(
-        "fuelPrice"
-      )?.value
-    );
-
-
-  if (
-    !distance ||
-    !consumption ||
-    !fuelPrice
-  ) {
-
-    showMessage(
-      "دخل كل معلومات حاسبة الوقود"
-    );
-
-    return;
-
-  }
-
-
-  const liters =
-    distance / consumption;
-
-
-  const cost =
-    liters * fuelPrice;
-
-
-  const monthly =
-    cost * 30;
-
-
-  const yearly =
-    cost * 365;
-
-
-  const result =
-    document.getElementById(
-      "fuelResult"
-    );
-
-
-  if (!result) return;
-
-
-  result.innerHTML = `
-
-    <div style="
-      background:#eff6ff;
-      border-radius:15px;
-      padding:20px;
-    ">
-
-      <h3>
-        📊 نتيجة الحساب
-      </h3>
-
-
-      <p>
-        استهلاكك اليومي:
-        <strong>
-          ${liters.toFixed(2)} لتر
-        </strong>
-      </p>
-
-
-      <p>
-        تكلفة اليوم:
-        <strong>
-          ${cost.toLocaleString()}
-          د.ع
-        </strong>
-      </p>
-
-
-      <p>
-        تكلفة الشهر:
-        <strong>
-          ${monthly.toLocaleString()}
-          د.ع
-        </strong>
-      </p>
-
-
-      <p>
-        تكلفة السنة:
-        <strong>
-          ${yearly.toLocaleString()}
-          د.ع
-        </strong>
-      </p>
 
     </div>
 
-  `;
+  </section>
 
-}
 
+  <!-- ==================================================
+       BRANDS
+  ================================================== -->
 
-/* =========================================================
-   INSTALLMENT CALCULATOR
-========================================================= */
-
-function calculateInstallment() {
-
-  const price =
-    Number(
-      document.getElementById(
-        "installmentPrice"
-      )?.value
-    );
-
-
-  const downPayment =
-    Number(
-      document.getElementById(
-        "downPayment"
-      )?.value
-    ) || 0;
-
-
-  const months =
-    Number(
-      document.getElementById(
-        "installmentMonths"
-      )?.value
-    );
-
-
-  const interest =
-    Number(
-      document.getElementById(
-        "installmentInterest"
-      )?.value
-    ) || 0;
-
-
-  if (
-    !price ||
-    !months
-  ) {
-
-    showMessage(
-      "دخل سعر السيارة وعدد الأشهر"
-    );
-
-    return;
-
-  }
-
-
-  const remaining =
-    Math.max(
-      price - downPayment,
-      0
-    );
-
-
-  const interestAmount =
-    remaining *
-    (interest / 100);
-
-
-  const total =
-    remaining +
-    interestAmount;
-
-
-  const monthly =
-    total / months;
-
-
-  const result =
-    document.getElementById(
-      "installmentResult"
-    );
-
-
-  if (!result) return;
-
-
-  result.innerHTML = `
-
-    <div style="
-      background:#f0fdf4;
-      border-radius:15px;
-      padding:20px;
-    ">
-
-      <h3>
-        💳 نتيجة التقسيط
-      </h3>
-
-
-      <p>
-        المبلغ المتبقي:
-        <strong>
-          ${remaining.toLocaleString()}
-          د.ع
-        </strong>
-      </p>
-
-
-      <p>
-        قيمة الفائدة:
-        <strong>
-          ${interestAmount.toLocaleString()}
-          د.ع
-        </strong>
-      </p>
-
-
-      <p>
-        إجمالي المبلغ:
-        <strong>
-          ${total.toLocaleString()}
-          د.ع
-        </strong>
-      </p>
-
-
-      <p style="
-        font-size:20px;
-        color:#16a34a;
-      ">
-
-        القسط الشهري:
-        <strong>
-          ${monthly.toLocaleString()}
-          د.ع
-        </strong>
-
-      </p>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =========================================================
-   CAR QUICK ANALYSIS
-========================================================= */
-
-function analyzeCar(id) {
-
-  const car =
-    cars.find(
-      item => item.id === id
-    );
-
-
-  if (!car) return;
-
-
-  let score = 0;
-
-
-  if (car.power >= 250)
-    score += 20;
-  else if (car.power >= 180)
-    score += 15;
-  else
-    score += 10;
-
-
-  if (car.consumption >= 15)
-    score += 25;
-  else if (car.consumption >= 10)
-    score += 18;
-  else
-    score += 10;
-
-
-  if (car.seats >= 7)
-    score += 15;
-  else
-    score += 10;
-
-
-  if (
-    car.fuel === "كهربائية" ||
-    car.fuel === "هايبرد"
-  )
-    score += 20;
-  else
-    score += 10;
-
-
-  if (car.price <= 30)
-    score += 20;
-  else if (car.price <= 60)
-    score += 15;
-  else
-    score += 8;
-
-
-  let level;
-
-
-  if (score >= 85) {
-
-    level =
-      "ممتازة ⭐⭐⭐⭐⭐";
-
-  } else if (score >= 70) {
-
-    level =
-      "جيدة جداً ⭐⭐⭐⭐";
-
-  } else if (score >= 55) {
-
-    level =
-      "جيدة ⭐⭐⭐";
-
-  } else {
-
-    level =
-      "متوسطة ⭐⭐";
-
-  }
-
-
-  alert(
-    `${car.brand} ${car.model}\n\n` +
-    `التقييم: ${level}\n` +
-    `النتيجة: ${score}/100`
-  );
-
-}
-
-
-/* =========================================================
-   LOAD EVERYTHING
-========================================================= */
-
-loadFavorites();
-
-updateCompareBar();
-
-
-/* =========================================================
-   KEYBOARD SEARCH
-========================================================= */
-
-document.addEventListener(
-  "keydown",
-  function(event) {
-
-    if (
-      event.key === "/" &&
-      document.activeElement.tagName !== "INPUT"
-    ) {
-
-      event.preventDefault();
-
-
-      const search =
-        document.getElementById(
-          "databaseSearch"
-        );
-
-
-      if (search) {
-
-        search.focus();
-
-      }
-
-    }
-
-
-    if (event.key === "Escape") {
-
-      closeModal();
-
-      closeComparison();
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   AUTO SAVE
-========================================================= */
-
-window.addEventListener(
-  "beforeunload",
-  function() {
-
-    saveFavorites();
-
-  }
-);
-
-
-/* =========================================================
-   PART 3 COMPLETE
-========================================================= */
-/* =========================================================
-   IRAQ CARS - PART 4
-   EXTRA FUNCTIONS
-========================================================= */
-
-
-/* =========================================================
-   CREATE CALCULATORS
-========================================================= */
-
-function createCalculators() {
-
-  if (
-    document.getElementById("iraqCalculators")
-  ) {
-    return;
-  }
-
-
-  const database =
-    document.getElementById("car-database");
-
-
-  if (!database) return;
-
-
-  const section =
-    document.createElement("section");
-
-
-  section.id =
-    "iraqCalculators";
-
-  section.className =
-    "container";
-
-
-  section.innerHTML = `
+  <section
+    class="container"
+    id="brands"
+  >
 
     <div class="section-title">
 
       <h2>
-        🧮 حاسبات السيارات
+        🏷️ أشهر الشركات
       </h2>
 
       <p>
-        احسب مصاريف سيارتك بشكل سريع
+        راح نضيف شركات وموديلات أكثر بالمراحل القادمة
       </p>
 
     </div>
 
 
-    <div style="
-      display:grid;
-      grid-template-columns:
-      repeat(auto-fit,minmax(280px,1fr));
-      gap:20px;
-    ">
+    <div class="brands">
 
 
-      <!-- FUEL -->
+      <button class="brand">
 
-      <div style="
-        background:white;
-        padding:22px;
-        border-radius:18px;
-        box-shadow:
-        0 5px 20px rgba(0,0,0,.07);
-      ">
+        <div class="brand-logo">
+          T
+        </div>
 
-        <h3 style="margin-bottom:15px;">
-          ⛽ حاسبة الوقود
-        </h3>
+        <span>
+          Toyota
+        </span>
+
+      </button>
 
 
-        <label>
-          المسافة اليومية
-        </label>
+      <button class="brand">
 
-        <input
-          id="fuelDistance"
-          type="number"
-          placeholder="مثلاً 100 كم"
-          style="
-            width:100%;
-            padding:12px;
-            margin:7px 0 12px;
-            border:1px solid #ddd;
-            border-radius:9px;
-          "
-        >
+        <div class="brand-logo">
+          B
+        </div>
+
+        <span>
+          BMW
+        </span>
+
+      </button>
 
 
-        <label>
-          استهلاك السيارة
-        </label>
+      <button class="brand">
 
-        <input
-          id="fuelConsumption"
-          type="number"
-          placeholder="كم لكل لتر"
-          style="
-            width:100%;
-            padding:12px;
-            margin:7px 0 12px;
-            border:1px solid #ddd;
-            border-radius:9px;
-          "
-        >
+        <div class="brand-logo">
+          M
+        </div>
+
+        <span>
+          Mercedes-Benz
+        </span>
+
+      </button>
 
 
-        <label>
-          سعر اللتر بالدينار
-        </label>
+      <button class="brand">
 
-        <input
-          id="fuelPrice"
-          type="number"
-          placeholder="مثلاً 850"
-          style="
-            width:100%;
-            padding:12px;
-            margin:7px 0 15px;
-            border:1px solid #ddd;
-            border-radius:9px;
-          "
-        >
+        <div class="brand-logo">
+          B
+        </div>
+
+        <span>
+          BYD
+        </span>
+
+      </button>
 
 
-        <button
-          onclick="calculateFuel()"
-          style="
-            width:100%;
-            border:none;
-            background:#2563eb;
-            color:white;
-            padding:13px;
-            border-radius:10px;
-            font-size:15px;
-            cursor:pointer;
-          "
-        >
-          احسب التكلفة
-        </button>
+      <button class="brand">
+
+        <div class="brand-logo">
+          H
+        </div>
+
+        <span>
+          Hyundai
+        </span>
+
+      </button>
 
 
-        <div
-          id="fuelResult"
-          style="margin-top:15px;"
-        ></div>
+      <button class="brand">
 
-      </div>
+        <div class="brand-logo">
+          K
+        </div>
 
+        <span>
+          Kia
+        </span>
 
-      <!-- INSTALLMENT -->
-
-      <div style="
-        background:white;
-        padding:22px;
-        border-radius:18px;
-        box-shadow:
-        0 5px 20px rgba(0,0,0,.07);
-      ">
-
-        <h3 style="margin-bottom:15px;">
-          💳 حاسبة الأقساط
-        </h3>
+      </button>
 
 
-        <label>
-          سعر السيارة بالدينار
-        </label>
+      <button class="brand">
 
-        <input
-          id="installmentPrice"
-          type="number"
-          placeholder="مثلاً 30000000"
-          style="
-            width:100%;
-            padding:12px;
-            margin:7px 0 12px;
-            border:1px solid #ddd;
-            border-radius:9px;
-          "
-        >
+        <div class="brand-logo">
+          N
+        </div>
+
+        <span>
+          Nissan
+        </span>
+
+      </button>
 
 
-        <label>
-          الدفعة الأولى
-        </label>
+      <button class="brand">
 
-        <input
-          id="downPayment"
-          type="number"
-          placeholder="مثلاً 5000000"
-          style="
-            width:100%;
-            padding:12px;
-            margin:7px 0 12px;
-            border:1px solid #ddd;
-            border-radius:9px;
-          "
-        >
+        <div class="brand-logo">
+          L
+        </div>
+
+        <span>
+          Lexus
+        </span>
+
+      </button>
 
 
-        <label>
-          عدد الأشهر
-        </label>
+      <button class="brand">
 
-        <input
-          id="installmentMonths"
-          type="number"
-          placeholder="مثلاً 36"
-          style="
-            width:100%;
-            padding:12px;
-            margin:7px 0 12px;
-            border:1px solid #ddd;
-            border-radius:9px;
-          "
-        >
+        <div class="brand-logo">
+          H
+        </div>
+
+        <span>
+          Honda
+        </span>
+
+      </button>
 
 
-        <label>
-          نسبة الفائدة %
-        </label>
+      <button class="brand">
 
-        <input
-          id="installmentInterest"
-          type="number"
-          placeholder="مثلاً 5"
-          style="
-            width:100%;
-            padding:12px;
-            margin:7px 0 15px;
-            border:1px solid #ddd;
-            border-radius:9px;
-          "
-        >
+        <div class="brand-logo">
+          G
+        </div>
+
+        <span>
+          Geely
+        </span>
+
+      </button>
 
 
-        <button
-          onclick="calculateInstallment()"
-          style="
-            width:100%;
-            border:none;
-            background:#16a34a;
-            color:white;
-            padding:13px;
-            border-radius:10px;
-            font-size:15px;
-            cursor:pointer;
-          "
-        >
-          احسب القسط
-        </button>
+      <button class="brand">
+
+        <div class="brand-logo">
+          C
+        </div>
+
+        <span>
+          Chery
+        </span>
+
+      </button>
 
 
-        <div
-          id="installmentResult"
-          style="margin-top:15px;"
-        ></div>
+      <button class="brand">
 
-      </div>
+        <div class="brand-logo">
+          M
+        </div>
+
+        <span>
+          MG
+        </span>
+
+      </button>
+
 
     </div>
 
-  `;
+  </section>
 
 
-  database.after(section);
+  <!-- ==================================================
+       FOOTER
+  ================================================== -->
 
-}
+  <footer>
 
+    <h2>
+      🚘 Iraq Cars
+    </h2>
 
-/* =========================================================
-   FAVORITES PANEL
-========================================================= */
+    <p>
+      منصة السيارات العراقية
+    </p>
 
-function createFavoritesButton() {
+    <p style="margin-top:10px;">
+      © 2026 Iraq Cars
+    </p>
 
-  if (
-    document.getElementById(
-      "favoritesFloatingButton"
-    )
-  ) {
-    return;
-  }
+  </footer>
 
 
-  const button =
-    document.createElement("button");
+  <!-- ==================================================
+       JAVASCRIPT
+  ================================================== -->
 
+  <script>
 
-  button.id =
-    "favoritesFloatingButton";
 
+    /* ================================================
+       SEARCH
+    ================================================= */
 
-  button.innerHTML =
-    "❤️ المفضلة";
+    function searchCars() {
 
+      const value =
+        document
+          .getElementById("searchInput")
+          .value
+          .trim();
 
-  button.style.position =
-    "fixed";
 
-  button.style.left =
-    "15px";
+      if (!value) {
 
-  button.style.bottom =
-    "20px";
+        document
+          .getElementById("cars")
+          .scrollIntoView({
+            behavior: "smooth"
+          });
 
-  button.style.zIndex =
-    "8000";
-
-  button.style.border =
-    "none";
-
-  button.style.background =
-    "#dc2626";
-
-  button.style.color =
-    "white";
-
-  button.style.padding =
-    "12px 18px";
-
-  button.style.borderRadius =
-    "30px";
-
-  button.style.cursor =
-    "pointer";
-
-  button.style.boxShadow =
-    "0 5px 20px rgba(0,0,0,.2)";
-
-
-  button.onclick =
-    showFavorites;
-
-
-  document.body.appendChild(
-    button
-  );
-
-}
-
-
-/* =========================================================
-   FAVORITES COUNT
-========================================================= */
-
-function updateFavoritesCount() {
-
-  const button =
-    document.getElementById(
-      "favoritesFloatingButton"
-    );
-
-
-  if (!button) return;
-
-
-  button.innerHTML =
-    `❤️ المفضلة (${favorites.length})`;
-
-}
-
-
-/* =========================================================
-   BRAND QUICK FILTER
-========================================================= */
-
-function filterByBrand(brand) {
-
-  const brandFilter =
-    document.getElementById(
-      "brandFilter"
-    );
-
-
-  if (!brandFilter) return;
-
-
-  brandFilter.value =
-    brand;
-
-
-  filterDatabase();
-
-
-  const database =
-    document.getElementById(
-      "car-database"
-    );
-
-
-  if (database) {
-
-    database.scrollIntoView({
-      behavior: "smooth"
-    });
-
-  }
-
-}
-
-
-/* =========================================================
-   ADD COMPARE BUTTON TO CARDS
-========================================================= */
-
-function addCompareButtons() {
-
-  const cards =
-    document.querySelectorAll(
-      ".advanced-card"
-    );
-
-
-  cards.forEach(card => {
-
-    const button =
-      card.querySelector(
-        ".compare-car-button"
-      );
-
-
-    if (button) return;
-
-
-    const title =
-      card.querySelector("h3");
-
-
-    if (!title) return;
-
-
-    const name =
-      title.textContent.trim();
-
-
-    const car =
-      cars.find(item => {
-
-        const fullName =
-          `${item.brand} ${item.model}`;
-
-        return fullName === name;
-
-      });
-
-
-    if (!car) return;
-
-
-    const actions =
-      card.querySelector(
-        ".card-actions"
-      );
-
-
-    if (!actions) return;
-
-
-    const compareButton =
-      document.createElement(
-        "button"
-      );
-
-
-    compareButton.className =
-      "compare-car-button";
-
-
-    compareButton.textContent =
-      "⚖️ مقارنة";
-
-
-    compareButton.style.border =
-      "none";
-
-    compareButton.style.background =
-      "#f1f5f9";
-
-    compareButton.style.color =
-      "#111827";
-
-    compareButton.style.padding =
-      "10px";
-
-    compareButton.style.borderRadius =
-      "8px";
-
-    compareButton.style.cursor =
-      "pointer";
-
-
-    compareButton.onclick =
-      function() {
-
-        addToCompare(car.id);
-
-      };
-
-
-    actions.appendChild(
-      compareButton
-    );
-
-  });
-
-}
-
-
-/* =========================================================
-   UPDATE CARD FEATURES
-========================================================= */
-
-const oldRenderDatabase =
-  renderDatabase;
-
-
-renderDatabase =
-  function(list) {
-
-    oldRenderDatabase(list);
-
-    setTimeout(function() {
-
-      addCompareButtons();
-
-      updateFavoritesCount();
-
-    }, 50);
-
-  };
-
-
-/* =========================================================
-   CAR BRAND BUTTONS
-========================================================= */
-
-function activateBrandButtons() {
-
-  const brands =
-    document.querySelectorAll(
-      ".brand"
-    );
-
-
-  brands.forEach(button => {
-
-    if (
-      button.dataset.activated
-    ) {
-      return;
-    }
-
-
-    button.dataset.activated =
-      "true";
-
-
-    const span =
-      button.querySelector(
-        "span"
-      );
-
-
-    if (!span) return;
-
-
-    const brandName =
-      span.textContent.trim();
-
-
-    button.addEventListener(
-      "click",
-      function() {
-
-        filterByBrand(
-          brandName
-        );
+        return;
 
       }
-    );
-
-  });
-
-}
 
 
-/* =========================================================
-   QUICK CAR ANALYSIS BUTTON
-========================================================= */
+      alert(
+        "نظام البحث الكامل راح نضيفه بالمرحلة الثانية.\n\nبحثك: " +
+        value
+      );
 
-function addAnalysisButtons() {
-
-  const cards =
-    document.querySelectorAll(
-      ".advanced-card"
-    );
-
-
-  cards.forEach(card => {
-
-    if (
-      card.querySelector(
-        ".analysis-button"
-      )
-    ) {
-      return;
     }
 
 
-    const title =
-      card.querySelector("h3");
+    /* ================================================
+       THEME
+    ================================================= */
 
+    function toggleTheme() {
 
-    if (!title) return;
-
-
-    const car =
-      cars.find(item =>
-        `${item.brand} ${item.model}`
-        ===
-        title.textContent.trim()
+      alert(
+        "الوضع الليلي راح نضيفه بالمرحلة القادمة."
       );
 
-
-    if (!car) return;
-
-
-    const actions =
-      card.querySelector(
-        ".card-actions"
-      );
-
-
-    if (!actions) return;
-
-
-    const button =
-      document.createElement(
-        "button"
-      );
-
-
-    button.className =
-      "analysis-button";
-
-
-    button.textContent =
-      "📊 تقييم";
-
-
-    button.style.border =
-      "none";
-
-    button.style.background =
-      "#fef3c7";
-
-    button.style.color =
-      "#92400e";
-
-    button.style.padding =
-      "10px";
-
-    button.style.borderRadius =
-      "8px";
-
-    button.style.cursor =
-      "pointer";
-
-
-    button.onclick =
-      function() {
-
-        analyzeCar(
-          car.id
-        );
-
-      };
-
-
-    actions.appendChild(
-      button
-    );
-
-  });
-
-}
-
-
-/* =========================================================
-   REFRESH ALL FEATURES
-========================================================= */
-
-function refreshCarFeatures() {
-
-  setTimeout(function() {
-
-    addCompareButtons();
-
-    addAnalysisButtons();
-
-    updateFavoritesCount();
-
-    activateBrandButtons();
-
-  }, 100);
-
-}
-
-
-/* =========================================================
-   OVERRIDE DATABASE RENDER
-========================================================= */
-
-const currentRenderDatabase =
-  renderDatabase;
-
-
-renderDatabase =
-  function(list) {
-
-    currentRenderDatabase(list);
-
-    refreshCarFeatures();
-
-  };
-
-
-/* =========================================================
-   CREATE WEBSITE TOOLS
-========================================================= */
-
-function initializePart4() {
-
-  loadFavorites();
-
-  createCalculators();
-
-  createFavoritesButton();
-
-  updateFavoritesCount();
-
-  activateBrandButtons();
-
-  refreshCarFeatures();
-
-  updateCompareBar();
-
-}
-
-
-/* =========================================================
-   START PART 4
-========================================================= */
-
-if (
-  document.readyState ===
-  "loading"
-) {
-
-  document.addEventListener(
-    "DOMContentLoaded",
-    initializePart4
-  );
-
-} else {
-
-  initializePart4();
-
-}
-
-
-/* =========================================================
-   AUTO UPDATE FAVORITES
-========================================================= */
-
-setInterval(
-  function() {
-
-    updateFavoritesCount();
-
-  },
-  1000
-);
-
-
-/* =========================================================
-   IRAQ CARS PART 4 COMPLETE
-========================================================= */
-/* =========================================================
-   IRAQ CARS - PART 4
-   EXTRA FUNCTIONS
-========================================================= */
-
-
-/* =========================================================
-   CREATE CALCULATORS
-========================================================= */
-
-function createCalculators() {
-
-  if (
-    document.getElementById("iraqCalculators")
-  ) {
-    return;
-  }
-
-
-  const database =
-    document.getElementById("car-database");
-
-
-  if (!database) return;
-
-
-  const section =
-    document.createElement("section");
-
-
-  section.id =
-    "iraqCalculators";
-
-  section.className =
-    "container";
-
-
-  section.innerHTML = `
-
-    <div class="section-title">
-
-      <h2>
-        🧮 حاسبات السيارات
-      </h2>
-
-      <p>
-        احسب مصاريف سيارتك بشكل سريع
-      </p>
-
-    </div>
-
-
-    <div style="
-      display:grid;
-      grid-template-columns:
-      repeat(auto-fit,minmax(280px,1fr));
-      gap:20px;
-    ">
-
-
-      <!-- FUEL -->
-
-      <div style="
-        background:white;
-        padding:22px;
-        border-radius:18px;
-        box-shadow:
-        0 5px 20px rgba(0,0,0,.07);
-      ">
-
-        <h3 style="margin-bottom:15px;">
-          ⛽ حاسبة الوقود
-        </h3>
-
-
-        <label>
-          المسافة اليومية
-        </label>
-
-        <input
-          id="fuelDistance"
-          type="number"
-          placeholder="مثلاً 100 كم"
-          style="
-            width:100%;
-            padding:12px;
-            margin:7px 0 12px;
-            border:1px solid #ddd;
-            border-radius:9px;
-          "
-        >
-
-
-        <label>
-          استهلاك السيارة
-        </label>
-
-        <input
-          id="fuelConsumption"
-          type="number"
-          placeholder="كم لكل لتر"
-          style="
-            width:100%;
-            padding:12px;
-            margin:7px 0 12px;
-            border:1px solid #ddd;
-            border-radius:9px;
-          "
-        >
-
-
-        <label>
-          سعر اللتر بالدينار
-        </label>
-
-        <input
-          id="fuelPrice"
-          type="number"
-          placeholder="مثلاً 850"
-          style="
-            width:100%;
-            padding:12px;
-            margin:7px 0 15px;
-            border:1px solid #ddd;
-            border-radius:9px;
-          "
-        >
-
-
-        <button
-          onclick="calculateFuel()"
-          style="
-            width:100%;
-            border:none;
-            background:#2563eb;
-            color:white;
-            padding:13px;
-            border-radius:10px;
-            font-size:15px;
-            cursor:pointer;
-          "
-        >
-          احسب التكلفة
-        </button>
-
-
-        <div
-          id="fuelResult"
-          style="margin-top:15px;"
-        ></div>
-
-      </div>
-
-
-      <!-- INSTALLMENT -->
-
-      <div style="
-        background:white;
-        padding:22px;
-        border-radius:18px;
-        box-shadow:
-        0 5px 20px rgba(0,0,0,.07);
-      ">
-
-        <h3 style="margin-bottom:15px;">
-          💳 حاسبة الأقساط
-        </h3>
-
-
-        <label>
-          سعر السيارة بالدينار
-        </label>
-
-        <input
-          id="installmentPrice"
-          type="number"
-          placeholder="مثلاً 30000000"
-          style="
-            width:100%;
-            padding:12px;
-            margin:7px 0 12px;
-            border:1px solid #ddd;
-            border-radius:9px;
-          "
-        >
-
-
-        <label>
-          الدفعة الأولى
-        </label>
-
-        <input
-          id="downPayment"
-          type="number"
-          placeholder="مثلاً 5000000"
-          style="
-            width:100%;
-            padding:12px;
-            margin:7px 0 12px;
-            border:1px solid #ddd;
-            border-radius:9px;
-          "
-        >
-
-
-        <label>
-          عدد الأشهر
-        </label>
-
-        <input
-          id="installmentMonths"
-          type="number"
-          placeholder="مثلاً 36"
-          style="
-            width:100%;
-            padding:12px;
-            margin:7px 0 12px;
-            border:1px solid #ddd;
-            border-radius:9px;
-          "
-        >
-
-
-        <label>
-          نسبة الفائدة %
-        </label>
-
-        <input
-          id="installmentInterest"
-          type="number"
-          placeholder="مثلاً 5"
-          style="
-            width:100%;
-            padding:12px;
-            margin:7px 0 15px;
-            border:1px solid #ddd;
-            border-radius:9px;
-          "
-        >
-
-
-        <button
-          onclick="calculateInstallment()"
-          style="
-            width:100%;
-            border:none;
-            background:#16a34a;
-            color:white;
-            padding:13px;
-            border-radius:10px;
-            font-size:15px;
-            cursor:pointer;
-          "
-        >
-          احسب القسط
-        </button>
-
-
-        <div
-          id="installmentResult"
-          style="margin-top:15px;"
-        ></div>
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  database.after(section);
-
-}
-
-
-/* =========================================================
-   FAVORITES PANEL
-========================================================= */
-
-function createFavoritesButton() {
-
-  if (
-    document.getElementById(
-      "favoritesFloatingButton"
-    )
-  ) {
-    return;
-  }
-
-
-  const button =
-    document.createElement("button");
-
-
-  button.id =
-    "favoritesFloatingButton";
-
-
-  button.innerHTML =
-    "❤️ المفضلة";
-
-
-  button.style.position =
-    "fixed";
-
-  button.style.left =
-    "15px";
-
-  button.style.bottom =
-    "20px";
-
-  button.style.zIndex =
-    "8000";
-
-  button.style.border =
-    "none";
-
-  button.style.background =
-    "#dc2626";
-
-  button.style.color =
-    "white";
-
-  button.style.padding =
-    "12px 18px";
-
-  button.style.borderRadius =
-    "30px";
-
-  button.style.cursor =
-    "pointer";
-
-  button.style.boxShadow =
-    "0 5px 20px rgba(0,0,0,.2)";
-
-
-  button.onclick =
-    showFavorites;
-
-
-  document.body.appendChild(
-    button
-  );
-
-}
-
-
-/* =========================================================
-   FAVORITES COUNT
-========================================================= */
-
-function updateFavoritesCount() {
-
-  const button =
-    document.getElementById(
-      "favoritesFloatingButton"
-    );
-
-
-  if (!button) return;
-
-
-  button.innerHTML =
-    `❤️ المفضلة (${favorites.length})`;
-
-}
-
-
-/* =========================================================
-   BRAND QUICK FILTER
-========================================================= */
-
-function filterByBrand(brand) {
-
-  const brandFilter =
-    document.getElementById(
-      "brandFilter"
-    );
-
-
-  if (!brandFilter) return;
-
-
-  brandFilter.value =
-    brand;
-
-
-  filterDatabase();
-
-
-  const database =
-    document.getElementById(
-      "car-database"
-    );
-
-
-  if (database) {
-
-    database.scrollIntoView({
-      behavior: "smooth"
-    });
-
-  }
-
-}
-
-
-/* =========================================================
-   ADD COMPARE BUTTON TO CARDS
-========================================================= */
-
-function addCompareButtons() {
-
-  const cards =
-    document.querySelectorAll(
-      ".advanced-card"
-    );
-
-
-  cards.forEach(card => {
-
-    const button =
-      card.querySelector(
-        ".compare-car-button"
-      );
-
-
-    if (button) return;
-
-
-    const title =
-      card.querySelector("h3");
-
-
-    if (!title) return;
-
-
-    const name =
-      title.textContent.trim();
-
-
-    const car =
-      cars.find(item => {
-
-        const fullName =
-          `${item.brand} ${item.model}`;
-
-        return fullName === name;
-
-      });
-
-
-    if (!car) return;
-
-
-    const actions =
-      card.querySelector(
-        ".card-actions"
-      );
-
-
-    if (!actions) return;
-
-
-    const compareButton =
-      document.createElement(
-        "button"
-      );
-
-
-    compareButton.className =
-      "compare-car-button";
-
-
-    compareButton.textContent =
-      "⚖️ مقارنة";
-
-
-    compareButton.style.border =
-      "none";
-
-    compareButton.style.background =
-      "#f1f5f9";
-
-    compareButton.style.color =
-      "#111827";
-
-    compareButton.style.padding =
-      "10px";
-
-    compareButton.style.borderRadius =
-      "8px";
-
-    compareButton.style.cursor =
-      "pointer";
-
-
-    compareButton.onclick =
-      function() {
-
-        addToCompare(car.id);
-
-      };
-
-
-    actions.appendChild(
-      compareButton
-    );
-
-  });
-
-}
-
-
-/* =========================================================
-   UPDATE CARD FEATURES
-========================================================= */
-
-const oldRenderDatabase =
-  renderDatabase;
-
-
-renderDatabase =
-  function(list) {
-
-    oldRenderDatabase(list);
-
-    setTimeout(function() {
-
-      addCompareButtons();
-
-      updateFavoritesCount();
-
-    }, 50);
-
-  };
-
-
-/* =========================================================
-   CAR BRAND BUTTONS
-========================================================= */
-
-function activateBrandButtons() {
-
-  const brands =
-    document.querySelectorAll(
-      ".brand"
-    );
-
-
-  brands.forEach(button => {
-
-    if (
-      button.dataset.activated
-    ) {
-      return;
     }
 
-
-    button.dataset.activated =
-      "true";
-
-
-    const span =
-      button.querySelector(
-        "span"
-      );
-
-
-    if (!span) return;
-
-
-    const brandName =
-      span.textContent.trim();
-
-
-    button.addEventListener(
-      "click",
-      function() {
-
-        filterByBrand(
-          brandName
-        );
-
-      }
-    );
-
-  });
-
-}
-
-
-/* =========================================================
-   QUICK CAR ANALYSIS BUTTON
-========================================================= */
-
-function addAnalysisButtons() {
-
-  const cards =
-    document.querySelectorAll(
-      ".advanced-card"
-    );
-
-
-  cards.forEach(card => {
-
-    if (
-      card.querySelector(
-        ".analysis-button"
-      )
-    ) {
-      return;
-    }
-
-
-    const title =
-      card.querySelector("h3");
-
-
-    if (!title) return;
-
-
-    const car =
-      cars.find(item =>
-        `${item.brand} ${item.model}`
-        ===
-        title.textContent.trim()
-      );
-
-
-    if (!car) return;
-
-
-    const actions =
-      card.querySelector(
-        ".card-actions"
-      );
-
-
-    if (!actions) return;
-
-
-    const button =
-      document.createElement(
-        "button"
-      );
-
-
-    button.className =
-      "analysis-button";
-
-
-    button.textContent =
-      "📊 تقييم";
-
-
-    button.style.border =
-      "none";
-
-    button.style.background =
-      "#fef3c7";
-
-    button.style.color =
-      "#92400e";
-
-    button.style.padding =
-      "10px";
-
-    button.style.borderRadius =
-      "8px";
-
-    button.style.cursor =
-      "pointer";
-
-
-    button.onclick =
-      function() {
-
-        analyzeCar(
-          car.id
-        );
-
-      };
-
-
-    actions.appendChild(
-      button
-    );
-
-  });
-
-}
-
-
-/* =========================================================
-   REFRESH ALL FEATURES
-========================================================= */
-
-function refreshCarFeatures() {
-
-  setTimeout(function() {
-
-    addCompareButtons();
-
-    addAnalysisButtons();
-
-    updateFavoritesCount();
-
-    activateBrandButtons();
-
-  }, 100);
-
-}
-
-
-/* =========================================================
-   OVERRIDE DATABASE RENDER
-========================================================= */
-
-const currentRenderDatabase =
-  renderDatabase;
-
-
-renderDatabase =
-  function(list) {
-
-    currentRenderDatabase(list);
-
-    refreshCarFeatures();
-
-  };
-
-
-/* =========================================================
-   CREATE WEBSITE TOOLS
-========================================================= */
-
-function initializePart4() {
-
-  loadFavorites();
-
-  createCalculators();
-
-  createFavoritesButton();
-
-  updateFavoritesCount();
-
-  activateBrandButtons();
-
-  refreshCarFeatures();
-
-  updateCompareBar();
-
-}
-
-
-/* =========================================================
-   START PART 4
-========================================================= */
-
-if (
-  document.readyState ===
-  "loading"
-) {
-
-  document.addEventListener(
-    "DOMContentLoaded",
-    initializePart4
-  );
-
-} else {
-
-  initializePart4();
-
-}
-
-
-/* =========================================================
-   AUTO UPDATE FAVORITES
-========================================================= */
-
-setInterval(
-  function() {
-
-    updateFavoritesCount();
-
-  },
-  1000
-);
-
-
-/* =========================================================
-   IRAQ CARS PART 4 COMPLETE
-========================================================= */
 <script>
 
 /* =========================================================
@@ -5300,6 +3103,496 @@ if (
   startNewIraqCars();
 
 }
+  </script>
 
-</script>
-</script>
+<body>
+
+  <!-- ================================
+       HEADER
+  ================================= -->
+
+  <header style="
+    background:#111827;
+    color:white;
+    padding:22px 15px;
+    text-align:center;
+  ">
+
+    <h1 style="
+      font-size:32px;
+      margin-bottom:8px;
+    ">
+      🚘 Iraq Cars
+    </h1>
+
+    <p style="
+      color:#cbd5e1;
+      font-size:15px;
+    ">
+      منصتك لمعرفة كل شيء عن السيارات في العراق
+    </p>
+
+  </header>
+
+
+  <!-- ================================
+       HERO
+  ================================= -->
+
+  <section style="
+    background:
+      linear-gradient(
+        135deg,
+        #111827,
+        #1d4ed8
+      );
+    color:white;
+    padding:55px 20px;
+    text-align:center;
+  ">
+
+    <h2 style="
+      font-size:30px;
+      margin-bottom:12px;
+    ">
+      شنو السيارة اللي تدور عليها؟ 🚘
+    </h2>
+
+    <p style="
+      color:#dbeafe;
+      margin-bottom:25px;
+    ">
+      ابحث، قارن، واعرف المواصفات والأسعار
+    </p>
+
+
+    <div style="
+      max-width:650px;
+      margin:auto;
+      display:flex;
+      background:white;
+      border-radius:14px;
+      overflow:hidden;
+    ">
+
+      <input
+        type="text"
+        placeholder="مثلاً Toyota Camry أو BYD Qin Plus"
+        style="
+          flex:1;
+          border:none;
+          outline:none;
+          padding:17px;
+          font-size:16px;
+          color:#111827;
+          text-align:right;
+        "
+      >
+
+      <button style="
+        border:none;
+        background:#2563eb;
+        color:white;
+        padding:0 25px;
+        font-size:16px;
+        cursor:pointer;
+      ">
+        بحث 🔍
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================================
+       QUICK SERVICES
+  ================================= -->
+
+  <section style="
+    max-width:1200px;
+    margin:35px auto;
+    padding:0 15px;
+  ">
+
+    <div style="
+      text-align:center;
+      margin-bottom:22px;
+    ">
+
+      <h2>
+        خدمات Iraq Cars
+      </h2>
+
+      <p style="
+        color:#64748b;
+        margin-top:6px;
+      ">
+        كل الأدوات اللي تحتاجها قبل شراء السيارة
+      </p>
+
+    </div>
+
+
+    <div style="
+      display:grid;
+      grid-template-columns:
+      repeat(auto-fit,minmax(220px,1fr));
+      gap:15px;
+    ">
+
+
+      <div style="
+        background:white;
+        padding:25px;
+        border-radius:16px;
+        text-align:center;
+        box-shadow:
+        0 4px 15px rgba(0,0,0,.07);
+      ">
+
+        <div style="
+          font-size:38px;
+          margin-bottom:10px;
+        ">
+          🚗
+        </div>
+
+        <h3>
+          سيارات للبيع
+        </h3>
+
+        <p style="
+          color:#64748b;
+          margin-top:7px;
+        ">
+          تصفح السيارات المتوفرة
+        </p>
+
+      </div>
+
+
+      <div style="
+        background:white;
+        padding:25px;
+        border-radius:16px;
+        text-align:center;
+        box-shadow:
+        0 4px 15px rgba(0,0,0,.07);
+      ">
+
+        <div style="
+          font-size:38px;
+          margin-bottom:10px;
+        ">
+          ⚖️
+        </div>
+
+        <h3>
+          مقارنة السيارات
+        </h3>
+
+        <p style="
+          color:#64748b;
+          margin-top:7px;
+        ">
+          قارن بين السيارات
+        </p>
+
+      </div>
+
+
+      <div style="
+        background:white;
+        padding:25px;
+        border-radius:16px;
+        text-align:center;
+        box-shadow:
+        0 4px 15px rgba(0,0,0,.07);
+      ">
+
+        <div style="
+          font-size:38px;
+          margin-bottom:10px;
+        ">
+          ⛽
+        </div>
+
+        <h3>
+          حاسبة الوقود
+        </h3>
+
+        <p style="
+          color:#64748b;
+          margin-top:7px;
+        ">
+          احسب صرفية سيارتك
+        </p>
+
+      </div>
+
+
+      <div style="
+        background:white;
+        padding:25px;
+        border-radius:16px;
+        text-align:center;
+        box-shadow:
+        0 4px 15px rgba(0,0,0,.07);
+      ">
+
+        <div style="
+          font-size:38px;
+          margin-bottom:10px;
+        ">
+          💳
+        </div>
+
+        <h3>
+          حاسبة الأقساط
+        </h3>
+
+        <p style="
+          color:#64748b;
+          margin-top:7px;
+        ">
+          احسب القسط الشهري
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================================
+       POPULAR BRANDS
+  ================================= -->
+
+  <section style="
+    max-width:1200px;
+    margin:40px auto;
+    padding:0 15px;
+  ">
+
+    <div style="
+      text-align:center;
+      margin-bottom:20px;
+    ">
+
+      <h2>
+        أشهر الشركات 🚘
+      </h2>
+
+    </div>
+
+
+    <div style="
+      display:grid;
+      grid-template-columns:
+      repeat(auto-fit,minmax(130px,1fr));
+      gap:12px;
+    ">
+
+
+      <button
+        onclick="
+          document.getElementById('iraqBrand').value='Toyota';
+          renderNewCars(1);
+          document.getElementById('iraqCarsNewSection').scrollIntoView({behavior:'smooth'});
+        "
+        style="
+          border:none;
+          background:white;
+          padding:18px;
+          border-radius:12px;
+          cursor:pointer;
+          font-weight:bold;
+        "
+      >
+        Toyota
+      </button>
+
+
+      <button
+        onclick="
+          document.getElementById('iraqBrand').value='BMW';
+          renderNewCars(1);
+          document.getElementById('iraqCarsNewSection').scrollIntoView({behavior:'smooth'});
+        "
+        style="
+          border:none;
+          background:white;
+          padding:18px;
+          border-radius:12px;
+          cursor:pointer;
+          font-weight:bold;
+        "
+      >
+        BMW
+      </button>
+
+
+      <button
+        onclick="
+          document.getElementById('iraqBrand').value='Mercedes-Benz';
+          renderNewCars(1);
+          document.getElementById('iraqCarsNewSection').scrollIntoView({behavior:'smooth'});
+        "
+        style="
+          border:none;
+          background:white;
+          padding:18px;
+          border-radius:12px;
+          cursor:pointer;
+          font-weight:bold;
+        "
+      >
+        Mercedes
+      </button>
+
+
+      <button
+        onclick="
+          document.getElementById('iraqBrand').value='Hyundai';
+          renderNewCars(1);
+          document.getElementById('iraqCarsNewSection').scrollIntoView({behavior:'smooth'});
+        "
+        style="
+          border:none;
+          background:white;
+          padding:18px;
+          border-radius:12px;
+          cursor:pointer;
+          font-weight:bold;
+        "
+      >
+        Hyundai
+      </button>
+
+
+      <button
+        onclick="
+          document.getElementById('iraqBrand').value='Kia';
+          renderNewCars(1);
+          document.getElementById('iraqCarsNewSection').scrollIntoView({behavior:'smooth'});
+        "
+        style="
+          border:none;
+          background:white;
+          padding:18px;
+          border-radius:12px;
+          cursor:pointer;
+          font-weight:bold;
+        "
+      >
+        Kia
+      </button>
+
+
+      <button
+        onclick="
+          document.getElementById('iraqBrand').value='BYD';
+          renderNewCars(1);
+          document.getElementById('iraqCarsNewSection').scrollIntoView({behavior:'smooth'});
+        "
+        style="
+          border:none;
+          background:white;
+          padding:18px;
+          border-radius:12px;
+          cursor:pointer;
+          font-weight:bold;
+        "
+      >
+        BYD
+      </button>
+
+
+      <button
+        onclick="
+          document.getElementById('iraqBrand').value='Nissan';
+          renderNewCars(1);
+          document.getElementById('iraqCarsNewSection').scrollIntoView({behavior:'smooth'});
+        "
+        style="
+          border:none;
+          background:white;
+          padding:18px;
+          border-radius:12px;
+          cursor:pointer;
+          font-weight:bold;
+        "
+      >
+        Nissan
+      </button>
+
+
+      <button
+        onclick="
+          document.getElementById('iraqBrand').value='Audi';
+          renderNewCars(1);
+          document.getElementById('iraqCarsNewSection').scrollIntoView({behavior:'smooth'});
+        "
+        style="
+          border:none;
+          background:white;
+          padding:18px;
+          border-radius:12px;
+          cursor:pointer;
+          font-weight:bold;
+        "
+      >
+        Audi
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================================
+       CAR DATABASE
+       السكربت راح يضيف القسم هنا
+  ================================= -->
+
+  <main id="car-database">
+
+  </main>
+
+
+  <!-- ================================
+       FOOTER
+  ================================= -->
+
+  <footer style="
+    margin-top:50px;
+    background:#111827;
+    color:white;
+    text-align:center;
+    padding:30px 15px;
+  ">
+
+    <h3>
+      🚘 Iraq Cars
+    </h3>
+
+    <p style="
+      color:#cbd5e1;
+      margin-top:8px;
+    ">
+      منصة السيارات العراقية
+    </p>
+
+    <p style="
+      color:#94a3b8;
+      margin-top:15px;
+      font-size:13px;
+    ">
+      © 2026 Iraq Cars
+    </p>
+
+</body>
+
+</html>
