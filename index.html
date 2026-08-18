@@ -1605,8 +1605,1093 @@
     }
 
 
-  </script>
+  <script>
 
+/* ==================================================
+   IRAQ CARS - DATABASE SYSTEM
+================================================== */
+
+
+/* ==================================================
+   CAR DATABASE
+================================================== */
+
+const cars = [
+
+  {
+    id: 1,
+    brand: "Toyota",
+    model: "Camry",
+    year: 2024,
+    type: "سيدان",
+    fuel: "بنزين",
+    engine: "2.5L",
+    power: 203,
+    torque: 250,
+    transmission: "أوتوماتيك 8 سرعات",
+    drive: "FWD",
+    consumption: 15,
+    seats: 5,
+    price: 32,
+    emoji: "🚘"
+  },
+
+  {
+    id: 2,
+    brand: "Toyota",
+    model: "Land Cruiser",
+    year: 2024,
+    type: "SUV",
+    fuel: "بنزين",
+    engine: "3.5L Twin Turbo",
+    power: 409,
+    torque: 650,
+    transmission: "أوتوماتيك 10 سرعات",
+    drive: "4WD",
+    consumption: 8,
+    seats: 7,
+    price: 110,
+    emoji: "🚙"
+  },
+
+  {
+    id: 3,
+    brand: "BYD",
+    model: "Seal",
+    year: 2024,
+    type: "سيدان",
+    fuel: "كهربائية",
+    engine: "Electric",
+    power: 530,
+    torque: 670,
+    transmission: "أوتوماتيك",
+    drive: "AWD",
+    consumption: 0,
+    seats: 5,
+    price: 45,
+    emoji: "🏎️"
+  },
+
+  {
+    id: 4,
+    brand: "BMW",
+    model: "520i",
+    year: 2024,
+    type: "سيدان",
+    fuel: "بنزين",
+    engine: "2.0L Turbo",
+    power: 208,
+    torque: 330,
+    transmission: "أوتوماتيك 8 سرعات",
+    drive: "RWD",
+    consumption: 14,
+    seats: 5,
+    price: 65,
+    emoji: "🚘"
+  },
+
+  {
+    id: 5,
+    brand: "BMW",
+    model: "X5",
+    year: 2024,
+    type: "SUV",
+    fuel: "بنزين",
+    engine: "3.0L Turbo",
+    power: 375,
+    torque: 520,
+    transmission: "أوتوماتيك",
+    drive: "AWD",
+    consumption: 9,
+    seats: 5,
+    price: 95,
+    emoji: "🚙"
+  },
+
+  {
+    id: 6,
+    brand: "Mercedes-Benz",
+    model: "C200",
+    year: 2024,
+    type: "سيدان",
+    fuel: "بنزين",
+    engine: "1.5L Turbo",
+    power: 204,
+    torque: 300,
+    transmission: "أوتوماتيك 9 سرعات",
+    drive: "RWD",
+    consumption: 14,
+    seats: 5,
+    price: 62,
+    emoji: "🚘"
+  },
+
+  {
+    id: 7,
+    brand: "Hyundai",
+    model: "Sonata",
+    year: 2024,
+    type: "سيدان",
+    fuel: "بنزين",
+    engine: "2.5L",
+    power: 191,
+    torque: 245,
+    transmission: "أوتوماتيك",
+    drive: "FWD",
+    consumption: 13,
+    seats: 5,
+    price: 29,
+    emoji: "🚘"
+  },
+
+  {
+    id: 8,
+    brand: "Kia",
+    model: "K5",
+    year: 2024,
+    type: "سيدان",
+    fuel: "بنزين",
+    engine: "2.5L Turbo",
+    power: 290,
+    torque: 422,
+    transmission: "أوتوماتيك",
+    drive: "FWD",
+    consumption: 12,
+    seats: 5,
+    price: 31,
+    emoji: "🚘"
+  },
+
+  {
+    id: 9,
+    brand: "Nissan",
+    model: "Patrol",
+    year: 2024,
+    type: "SUV",
+    fuel: "بنزين",
+    engine: "5.6L V8",
+    power: 400,
+    torque: 560,
+    transmission: "أوتوماتيك",
+    drive: "4WD",
+    consumption: 7,
+    seats: 8,
+    price: 95,
+    emoji: "🚙"
+  },
+
+  {
+    id: 10,
+    brand: "Lexus",
+    model: "ES350",
+    year: 2024,
+    type: "سيدان",
+    fuel: "بنزين",
+    engine: "3.5L V6",
+    power: 302,
+    torque: 356,
+    transmission: "أوتوماتيك",
+    drive: "FWD",
+    consumption: 10,
+    seats: 5,
+    price: 60,
+    emoji: "🚘"
+  },
+
+  {
+    id: 11,
+    brand: "Toyota",
+    model: "Corolla",
+    year: 2024,
+    type: "سيدان",
+    fuel: "بنزين",
+    engine: "2.0L",
+    power: 169,
+    torque: 205,
+    transmission: "CVT",
+    drive: "FWD",
+    consumption: 16,
+    seats: 5,
+    price: 24,
+    emoji: "🚗"
+  },
+
+  {
+    id: 12,
+    brand: "BYD",
+    model: "Song Plus",
+    year: 2024,
+    type: "SUV",
+    fuel: "هايبرد",
+    engine: "1.5L Hybrid",
+    power: 218,
+    torque: 325,
+    transmission: "Automatic",
+    drive: "FWD",
+    consumption: 20,
+    seats: 5,
+    price: 30,
+    emoji: "🚙"
+  }
+
+];
+
+
+/* ==================================================
+   VARIABLES
+================================================== */
+
+let filteredCars = [...cars];
+
+let favorites = [];
+
+
+/* ==================================================
+   FORMAT PRICE
+================================================== */
+
+function formatPrice(price) {
+
+  if (!price) {
+    return "السعر غير متوفر";
+  }
+
+  return price + " مليون د.ع";
+
+}
+
+
+/* ==================================================
+   LOAD FILTERS
+================================================== */
+
+function loadFilters() {
+
+  const brandFilter =
+    document.getElementById("brandFilter");
+
+  const typeFilter =
+    document.getElementById("typeFilter");
+
+  const fuelFilter =
+    document.getElementById("fuelFilter");
+
+  const yearFilter =
+    document.getElementById("yearFilter");
+
+
+  if (!brandFilter) return;
+
+
+  const brands = [
+    ...new Set(
+      cars.map(car => car.brand)
+    )
+  ];
+
+
+  const types = [
+    ...new Set(
+      cars.map(car => car.type)
+    )
+  ];
+
+
+  const fuels = [
+    ...new Set(
+      cars.map(car => car.fuel)
+    )
+  ];
+
+
+  const years = [
+    ...new Set(
+      cars.map(car => car.year)
+    )
+  ];
+
+
+  brands.forEach(brand => {
+
+    brandFilter.innerHTML += `
+      <option value="${brand}">
+        ${brand}
+      </option>
+    `;
+
+  });
+
+
+  types.forEach(type => {
+
+    typeFilter.innerHTML += `
+      <option value="${type}">
+        ${type}
+      </option>
+    `;
+
+  });
+
+
+  fuels.forEach(fuel => {
+
+    fuelFilter.innerHTML += `
+      <option value="${fuel}">
+        ${fuel}
+      </option>
+    `;
+
+  });
+
+
+  years
+    .sort((a, b) => b - a)
+    .forEach(year => {
+
+      yearFilter.innerHTML += `
+        <option value="${year}">
+          ${year}
+        </option>
+      `;
+
+    });
+
+}
+
+
+/* ==================================================
+   FILTER DATABASE
+================================================== */
+
+function filterDatabase() {
+
+  const search =
+    document
+      .getElementById("databaseSearch")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const brand =
+    document.getElementById("brandFilter").value;
+
+
+  const type =
+    document.getElementById("typeFilter").value;
+
+
+  const fuel =
+    document.getElementById("fuelFilter").value;
+
+
+  const year =
+    document.getElementById("yearFilter").value;
+
+
+  const price =
+    document.getElementById("priceFilter").value;
+
+
+  const sort =
+    document.getElementById("sortFilter").value;
+
+
+  let result = cars.filter(car => {
+
+    const fullName =
+      `${car.brand} ${car.model}`.toLowerCase();
+
+
+    const matchesSearch =
+      !search ||
+      fullName.includes(search) ||
+      car.engine.toLowerCase().includes(search);
+
+
+    const matchesBrand =
+      !brand || car.brand === brand;
+
+
+    const matchesType =
+      !type || car.type === type;
+
+
+    const matchesFuel =
+      !fuel || car.fuel === fuel;
+
+
+    const matchesYear =
+      !year || String(car.year) === year;
+
+
+    let matchesPrice = true;
+
+
+    if (price === "under30") {
+
+      matchesPrice = car.price < 30;
+
+    }
+
+
+    if (price === "30-60") {
+
+      matchesPrice =
+        car.price >= 30 &&
+        car.price <= 60;
+
+    }
+
+
+    if (price === "60-100") {
+
+      matchesPrice =
+        car.price > 60 &&
+        car.price <= 100;
+
+    }
+
+
+    if (price === "over100") {
+
+      matchesPrice = car.price > 100;
+
+    }
+
+
+    return (
+      matchesSearch &&
+      matchesBrand &&
+      matchesType &&
+      matchesFuel &&
+      matchesYear &&
+      matchesPrice
+    );
+
+  });
+
+
+  /* SORT */
+
+  if (sort === "priceLow") {
+
+    result.sort(
+      (a, b) => a.price - b.price
+    );
+
+  }
+
+
+  if (sort === "priceHigh") {
+
+    result.sort(
+      (a, b) => b.price - a.price
+    );
+
+  }
+
+
+  if (sort === "powerHigh") {
+
+    result.sort(
+      (a, b) => b.power - a.power
+    );
+
+  }
+
+
+  if (sort === "yearNew") {
+
+    result.sort(
+      (a, b) => b.year - a.year
+    );
+
+  }
+
+
+  filteredCars = result;
+
+  renderDatabase(result);
+
+}
+
+
+/* ==================================================
+   RENDER CARS
+================================================== */
+
+function renderDatabase(list) {
+
+  const grid =
+    document.getElementById("databaseGrid");
+
+
+  const count =
+    document.getElementById("resultsCount");
+
+
+  if (!grid) return;
+
+
+  if (count) {
+
+    count.textContent =
+      `تم العثور على ${list.length} سيارة`;
+
+  }
+
+
+  if (list.length === 0) {
+
+    grid.innerHTML = `
+
+      <div class="no-results">
+
+        <div>🔍</div>
+
+        <h3>
+          ما لقينا سيارة بهذا البحث
+        </h3>
+
+        <p style="color:#64748b;">
+          جرّب تغير الشركة أو النوع أو السعر.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML = list.map(car => {
+
+    const isFavorite =
+      favorites.includes(car.id);
+
+
+    return `
+
+      <div class="advanced-card">
+
+        <div class="advanced-image">
+          ${car.emoji}
+        </div>
+
+
+        <div class="advanced-info">
+
+          <h3>
+            ${car.brand} ${car.model}
+          </h3>
+
+
+          <div class="car-subtitle">
+
+            ${car.year}
+            •
+            ${car.type}
+            •
+            ${car.fuel}
+
+          </div>
+
+
+          <div class="spec-list">
+
+            <div class="spec-item">
+
+              <strong>
+                المحرك
+              </strong>
+
+              ${car.engine}
+
+            </div>
+
+
+            <div class="spec-item">
+
+              <strong>
+                القوة
+              </strong>
+
+              ${car.power} HP
+
+            </div>
+
+
+            <div class="spec-item">
+
+              <strong>
+                القير
+              </strong>
+
+              ${car.transmission}
+
+            </div>
+
+
+            <div class="spec-item">
+
+              <strong>
+                الدفع
+              </strong>
+
+              ${car.drive}
+
+            </div>
+
+
+            <div class="spec-item">
+
+              <strong>
+                المقاعد
+              </strong>
+
+              ${car.seats}
+
+            </div>
+
+
+            <div class="spec-item">
+
+              <strong>
+                الصرفية
+              </strong>
+
+              ${
+                car.consumption
+                ? car.consumption + " كم/لتر"
+                : "كهربائية"
+              }
+
+            </div>
+
+          </div>
+
+
+          <div
+            class="car-price"
+            style="margin-bottom:15px;"
+          >
+
+            ${formatPrice(car.price)}
+
+          </div>
+
+
+          <div class="card-actions">
+
+            <button
+              class="details-button"
+              onclick="showCarDetails(${car.id})"
+            >
+
+              التفاصيل
+
+            </button>
+
+
+            <button
+              class="favorite-button"
+              onclick="toggleFavorite(${car.id})"
+            >
+
+              ${
+                isFavorite
+                ? "❤️ محفوظة"
+                : "♡ المفضلة"
+              }
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }).join("");
+
+}
+
+
+/* ==================================================
+   CAR DETAILS
+================================================== */
+
+function showCarDetails(id) {
+
+  const car =
+    cars.find(item => item.id === id);
+
+
+  if (!car) return;
+
+
+  const modal =
+    document.getElementById("carModal");
+
+
+  const content =
+    document.getElementById("modalContent");
+
+
+  if (!modal || !content) {
+
+    alert(
+      "قسم تفاصيل السيارة لم تتم إضافته بعد."
+    );
+
+    return;
+
+  }
+
+
+  content.innerHTML = `
+
+    <button
+      onclick="closeModal()"
+      style="
+        position:absolute;
+        top:15px;
+        left:15px;
+        border:none;
+        background:#f1f5f9;
+        width:40px;
+        height:40px;
+        border-radius:50%;
+        font-size:18px;
+      "
+    >
+      ✕
+    </button>
+
+
+    <div style="
+      text-align:center;
+      font-size:90px;
+      margin-bottom:10px;
+    ">
+
+      ${car.emoji}
+
+    </div>
+
+
+    <h2 style="
+      text-align:center;
+      margin-bottom:5px;
+    ">
+
+      ${car.brand} ${car.model}
+
+    </h2>
+
+
+    <p style="
+      text-align:center;
+      color:#64748b;
+      margin-bottom:25px;
+    ">
+
+      ${car.year}
+      •
+      ${car.type}
+      •
+      ${car.fuel}
+
+    </p>
+
+
+    <div class="spec-list">
+
+      <div class="spec-item">
+        <strong>المحرك</strong>
+        ${car.engine}
+      </div>
+
+      <div class="spec-item">
+        <strong>القوة</strong>
+        ${car.power} حصان
+      </div>
+
+      <div class="spec-item">
+        <strong>العزم</strong>
+        ${car.torque} Nm
+      </div>
+
+      <div class="spec-item">
+        <strong>القير</strong>
+        ${car.transmission}
+      </div>
+
+      <div class="spec-item">
+        <strong>الدفع</strong>
+        ${car.drive}
+      </div>
+
+      <div class="spec-item">
+        <strong>المقاعد</strong>
+        ${car.seats}
+      </div>
+
+    </div>
+
+
+    <div style="
+      background:#eff6ff;
+      padding:18px;
+      border-radius:12px;
+      margin-top:20px;
+      text-align:center;
+    ">
+
+      <strong style="
+        color:#2563eb;
+        font-size:22px;
+      ">
+
+        ${formatPrice(car.price)}
+
+      </strong>
+
+      <p style="
+        color:#64748b;
+        font-size:12px;
+        margin-top:5px;
+      ">
+
+        السعر تجريبي حالياً
+
+      </p>
+
+    </div>
+
+  `;
+
+
+  modal.style.display = "block";
+
+  document.body.style.overflow = "hidden";
+
+}
+
+
+/* ==================================================
+   CLOSE MODAL
+================================================== */
+
+function closeModal() {
+
+  const modal =
+    document.getElementById("carModal");
+
+
+  if (!modal) return;
+
+
+  modal.style.display = "none";
+
+  document.body.style.overflow = "auto";
+
+}
+
+
+/* ==================================================
+   FAVORITES
+================================================== */
+
+function toggleFavorite(id) {
+
+  const index =
+    favorites.indexOf(id);
+
+
+  if (index === -1) {
+
+    favorites.push(id);
+
+  } else {
+
+    favorites.splice(index, 1);
+
+  }
+
+
+  renderDatabase(filteredCars);
+
+}
+
+
+/* ==================================================
+   RESET FILTERS
+================================================== */
+
+function resetFilters() {
+
+  const ids = [
+
+    "databaseSearch",
+    "brandFilter",
+    "typeFilter",
+    "fuelFilter",
+    "yearFilter",
+    "priceFilter",
+    "sortFilter"
+
+  ];
+
+
+  ids.forEach(id => {
+
+    const element =
+      document.getElementById(id);
+
+
+    if (element) {
+
+      element.value = "";
+
+    }
+
+  });
+
+
+  filterDatabase();
+
+}
+
+
+/* ==================================================
+   HERO SEARCH
+================================================== */
+
+function searchCars() {
+
+  const input =
+    document.getElementById("searchInput");
+
+
+  const databaseSearch =
+    document.getElementById("databaseSearch");
+
+
+  if (!input) return;
+
+
+  const value =
+    input.value.trim();
+
+
+  if (databaseSearch) {
+
+    databaseSearch.value = value;
+
+    filterDatabase();
+
+  }
+
+
+  const database =
+    document.getElementById("car-database");
+
+
+  if (database) {
+
+    database.scrollIntoView({
+      behavior: "smooth"
+    });
+
+  }
+
+}
+
+
+/* ==================================================
+   DARK MODE
+================================================== */
+
+function toggleTheme() {
+
+  document.body.classList.toggle(
+    "dark-mode"
+  );
+
+
+  const isDark =
+    document.body.classList.contains(
+      "dark-mode"
+    );
+
+
+  if (isDark) {
+
+    document.body.style.background =
+      "#020617";
+
+    document.body.style.color =
+      "#f8fafc";
+
+  } else {
+
+    document.body.style.background =
+      "#f5f7fb";
+
+    document.body.style.color =
+      "#111827";
+
+  }
+
+}
+
+
+/* ==================================================
+   MODAL OUTSIDE CLICK
+================================================== */
+
+const carModal =
+  document.getElementById("carModal");
+
+
+if (carModal) {
+
+  carModal.addEventListener(
+    "click",
+    function(event) {
+
+      if (event.target === this) {
+
+        closeModal();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* ==================================================
+   START WEBSITE
+================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    loadFilters();
+
+    renderDatabase(cars);
+
+  }
+);
 
 </body>
 
