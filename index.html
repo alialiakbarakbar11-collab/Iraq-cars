@@ -3007,4 +3007,2299 @@ setInterval(
 /* =========================================================
    IRAQ CARS PART 4 COMPLETE
 ========================================================= */
+/* =========================================================
+   IRAQ CARS - PART 4
+   EXTRA FUNCTIONS
+========================================================= */
+
+
+/* =========================================================
+   CREATE CALCULATORS
+========================================================= */
+
+function createCalculators() {
+
+  if (
+    document.getElementById("iraqCalculators")
+  ) {
+    return;
+  }
+
+
+  const database =
+    document.getElementById("car-database");
+
+
+  if (!database) return;
+
+
+  const section =
+    document.createElement("section");
+
+
+  section.id =
+    "iraqCalculators";
+
+  section.className =
+    "container";
+
+
+  section.innerHTML = `
+
+    <div class="section-title">
+
+      <h2>
+        🧮 حاسبات السيارات
+      </h2>
+
+      <p>
+        احسب مصاريف سيارتك بشكل سريع
+      </p>
+
+    </div>
+
+
+    <div style="
+      display:grid;
+      grid-template-columns:
+      repeat(auto-fit,minmax(280px,1fr));
+      gap:20px;
+    ">
+
+
+      <!-- FUEL -->
+
+      <div style="
+        background:white;
+        padding:22px;
+        border-radius:18px;
+        box-shadow:
+        0 5px 20px rgba(0,0,0,.07);
+      ">
+
+        <h3 style="margin-bottom:15px;">
+          ⛽ حاسبة الوقود
+        </h3>
+
+
+        <label>
+          المسافة اليومية
+        </label>
+
+        <input
+          id="fuelDistance"
+          type="number"
+          placeholder="مثلاً 100 كم"
+          style="
+            width:100%;
+            padding:12px;
+            margin:7px 0 12px;
+            border:1px solid #ddd;
+            border-radius:9px;
+          "
+        >
+
+
+        <label>
+          استهلاك السيارة
+        </label>
+
+        <input
+          id="fuelConsumption"
+          type="number"
+          placeholder="كم لكل لتر"
+          style="
+            width:100%;
+            padding:12px;
+            margin:7px 0 12px;
+            border:1px solid #ddd;
+            border-radius:9px;
+          "
+        >
+
+
+        <label>
+          سعر اللتر بالدينار
+        </label>
+
+        <input
+          id="fuelPrice"
+          type="number"
+          placeholder="مثلاً 850"
+          style="
+            width:100%;
+            padding:12px;
+            margin:7px 0 15px;
+            border:1px solid #ddd;
+            border-radius:9px;
+          "
+        >
+
+
+        <button
+          onclick="calculateFuel()"
+          style="
+            width:100%;
+            border:none;
+            background:#2563eb;
+            color:white;
+            padding:13px;
+            border-radius:10px;
+            font-size:15px;
+            cursor:pointer;
+          "
+        >
+          احسب التكلفة
+        </button>
+
+
+        <div
+          id="fuelResult"
+          style="margin-top:15px;"
+        ></div>
+
+      </div>
+
+
+      <!-- INSTALLMENT -->
+
+      <div style="
+        background:white;
+        padding:22px;
+        border-radius:18px;
+        box-shadow:
+        0 5px 20px rgba(0,0,0,.07);
+      ">
+
+        <h3 style="margin-bottom:15px;">
+          💳 حاسبة الأقساط
+        </h3>
+
+
+        <label>
+          سعر السيارة بالدينار
+        </label>
+
+        <input
+          id="installmentPrice"
+          type="number"
+          placeholder="مثلاً 30000000"
+          style="
+            width:100%;
+            padding:12px;
+            margin:7px 0 12px;
+            border:1px solid #ddd;
+            border-radius:9px;
+          "
+        >
+
+
+        <label>
+          الدفعة الأولى
+        </label>
+
+        <input
+          id="downPayment"
+          type="number"
+          placeholder="مثلاً 5000000"
+          style="
+            width:100%;
+            padding:12px;
+            margin:7px 0 12px;
+            border:1px solid #ddd;
+            border-radius:9px;
+          "
+        >
+
+
+        <label>
+          عدد الأشهر
+        </label>
+
+        <input
+          id="installmentMonths"
+          type="number"
+          placeholder="مثلاً 36"
+          style="
+            width:100%;
+            padding:12px;
+            margin:7px 0 12px;
+            border:1px solid #ddd;
+            border-radius:9px;
+          "
+        >
+
+
+        <label>
+          نسبة الفائدة %
+        </label>
+
+        <input
+          id="installmentInterest"
+          type="number"
+          placeholder="مثلاً 5"
+          style="
+            width:100%;
+            padding:12px;
+            margin:7px 0 15px;
+            border:1px solid #ddd;
+            border-radius:9px;
+          "
+        >
+
+
+        <button
+          onclick="calculateInstallment()"
+          style="
+            width:100%;
+            border:none;
+            background:#16a34a;
+            color:white;
+            padding:13px;
+            border-radius:10px;
+            font-size:15px;
+            cursor:pointer;
+          "
+        >
+          احسب القسط
+        </button>
+
+
+        <div
+          id="installmentResult"
+          style="margin-top:15px;"
+        ></div>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  database.after(section);
+
+}
+
+
+/* =========================================================
+   FAVORITES PANEL
+========================================================= */
+
+function createFavoritesButton() {
+
+  if (
+    document.getElementById(
+      "favoritesFloatingButton"
+    )
+  ) {
+    return;
+  }
+
+
+  const button =
+    document.createElement("button");
+
+
+  button.id =
+    "favoritesFloatingButton";
+
+
+  button.innerHTML =
+    "❤️ المفضلة";
+
+
+  button.style.position =
+    "fixed";
+
+  button.style.left =
+    "15px";
+
+  button.style.bottom =
+    "20px";
+
+  button.style.zIndex =
+    "8000";
+
+  button.style.border =
+    "none";
+
+  button.style.background =
+    "#dc2626";
+
+  button.style.color =
+    "white";
+
+  button.style.padding =
+    "12px 18px";
+
+  button.style.borderRadius =
+    "30px";
+
+  button.style.cursor =
+    "pointer";
+
+  button.style.boxShadow =
+    "0 5px 20px rgba(0,0,0,.2)";
+
+
+  button.onclick =
+    showFavorites;
+
+
+  document.body.appendChild(
+    button
+  );
+
+}
+
+
+/* =========================================================
+   FAVORITES COUNT
+========================================================= */
+
+function updateFavoritesCount() {
+
+  const button =
+    document.getElementById(
+      "favoritesFloatingButton"
+    );
+
+
+  if (!button) return;
+
+
+  button.innerHTML =
+    `❤️ المفضلة (${favorites.length})`;
+
+}
+
+
+/* =========================================================
+   BRAND QUICK FILTER
+========================================================= */
+
+function filterByBrand(brand) {
+
+  const brandFilter =
+    document.getElementById(
+      "brandFilter"
+    );
+
+
+  if (!brandFilter) return;
+
+
+  brandFilter.value =
+    brand;
+
+
+  filterDatabase();
+
+
+  const database =
+    document.getElementById(
+      "car-database"
+    );
+
+
+  if (database) {
+
+    database.scrollIntoView({
+      behavior: "smooth"
+    });
+
+  }
+
+}
+
+
+/* =========================================================
+   ADD COMPARE BUTTON TO CARDS
+========================================================= */
+
+function addCompareButtons() {
+
+  const cards =
+    document.querySelectorAll(
+      ".advanced-card"
+    );
+
+
+  cards.forEach(card => {
+
+    const button =
+      card.querySelector(
+        ".compare-car-button"
+      );
+
+
+    if (button) return;
+
+
+    const title =
+      card.querySelector("h3");
+
+
+    if (!title) return;
+
+
+    const name =
+      title.textContent.trim();
+
+
+    const car =
+      cars.find(item => {
+
+        const fullName =
+          `${item.brand} ${item.model}`;
+
+        return fullName === name;
+
+      });
+
+
+    if (!car) return;
+
+
+    const actions =
+      card.querySelector(
+        ".card-actions"
+      );
+
+
+    if (!actions) return;
+
+
+    const compareButton =
+      document.createElement(
+        "button"
+      );
+
+
+    compareButton.className =
+      "compare-car-button";
+
+
+    compareButton.textContent =
+      "⚖️ مقارنة";
+
+
+    compareButton.style.border =
+      "none";
+
+    compareButton.style.background =
+      "#f1f5f9";
+
+    compareButton.style.color =
+      "#111827";
+
+    compareButton.style.padding =
+      "10px";
+
+    compareButton.style.borderRadius =
+      "8px";
+
+    compareButton.style.cursor =
+      "pointer";
+
+
+    compareButton.onclick =
+      function() {
+
+        addToCompare(car.id);
+
+      };
+
+
+    actions.appendChild(
+      compareButton
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   UPDATE CARD FEATURES
+========================================================= */
+
+const oldRenderDatabase =
+  renderDatabase;
+
+
+renderDatabase =
+  function(list) {
+
+    oldRenderDatabase(list);
+
+    setTimeout(function() {
+
+      addCompareButtons();
+
+      updateFavoritesCount();
+
+    }, 50);
+
+  };
+
+
+/* =========================================================
+   CAR BRAND BUTTONS
+========================================================= */
+
+function activateBrandButtons() {
+
+  const brands =
+    document.querySelectorAll(
+      ".brand"
+    );
+
+
+  brands.forEach(button => {
+
+    if (
+      button.dataset.activated
+    ) {
+      return;
+    }
+
+
+    button.dataset.activated =
+      "true";
+
+
+    const span =
+      button.querySelector(
+        "span"
+      );
+
+
+    if (!span) return;
+
+
+    const brandName =
+      span.textContent.trim();
+
+
+    button.addEventListener(
+      "click",
+      function() {
+
+        filterByBrand(
+          brandName
+        );
+
+      }
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   QUICK CAR ANALYSIS BUTTON
+========================================================= */
+
+function addAnalysisButtons() {
+
+  const cards =
+    document.querySelectorAll(
+      ".advanced-card"
+    );
+
+
+  cards.forEach(card => {
+
+    if (
+      card.querySelector(
+        ".analysis-button"
+      )
+    ) {
+      return;
+    }
+
+
+    const title =
+      card.querySelector("h3");
+
+
+    if (!title) return;
+
+
+    const car =
+      cars.find(item =>
+        `${item.brand} ${item.model}`
+        ===
+        title.textContent.trim()
+      );
+
+
+    if (!car) return;
+
+
+    const actions =
+      card.querySelector(
+        ".card-actions"
+      );
+
+
+    if (!actions) return;
+
+
+    const button =
+      document.createElement(
+        "button"
+      );
+
+
+    button.className =
+      "analysis-button";
+
+
+    button.textContent =
+      "📊 تقييم";
+
+
+    button.style.border =
+      "none";
+
+    button.style.background =
+      "#fef3c7";
+
+    button.style.color =
+      "#92400e";
+
+    button.style.padding =
+      "10px";
+
+    button.style.borderRadius =
+      "8px";
+
+    button.style.cursor =
+      "pointer";
+
+
+    button.onclick =
+      function() {
+
+        analyzeCar(
+          car.id
+        );
+
+      };
+
+
+    actions.appendChild(
+      button
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   REFRESH ALL FEATURES
+========================================================= */
+
+function refreshCarFeatures() {
+
+  setTimeout(function() {
+
+    addCompareButtons();
+
+    addAnalysisButtons();
+
+    updateFavoritesCount();
+
+    activateBrandButtons();
+
+  }, 100);
+
+}
+
+
+/* =========================================================
+   OVERRIDE DATABASE RENDER
+========================================================= */
+
+const currentRenderDatabase =
+  renderDatabase;
+
+
+renderDatabase =
+  function(list) {
+
+    currentRenderDatabase(list);
+
+    refreshCarFeatures();
+
+  };
+
+
+/* =========================================================
+   CREATE WEBSITE TOOLS
+========================================================= */
+
+function initializePart4() {
+
+  loadFavorites();
+
+  createCalculators();
+
+  createFavoritesButton();
+
+  updateFavoritesCount();
+
+  activateBrandButtons();
+
+  refreshCarFeatures();
+
+  updateCompareBar();
+
+}
+
+
+/* =========================================================
+   START PART 4
+========================================================= */
+
+if (
+  document.readyState ===
+  "loading"
+) {
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    initializePart4
+  );
+
+} else {
+
+  initializePart4();
+
+}
+
+
+/* =========================================================
+   AUTO UPDATE FAVORITES
+========================================================= */
+
+setInterval(
+  function() {
+
+    updateFavoritesCount();
+
+  },
+  1000
+);
+
+
+/* =========================================================
+   IRAQ CARS PART 4 COMPLETE
+========================================================= */
+<script>
+
+/* =========================================================
+   IRAQ CARS - NEW CAR DATABASE
+   300 CAR LISTINGS
+========================================================= */
+
+const iraqCars = [
+
+  /* TOYOTA */
+  ["Toyota","Camry","سيدان","بنزين","2.5L",203,2024,32],
+  ["Toyota","Corolla","سيدان","بنزين","2.0L",169,2024,24],
+  ["Toyota","Yaris","سيدان","بنزين","1.5L",105,2024,19],
+  ["Toyota","Avalon","سيدان","بنزين","3.5L",301,2022,38],
+  ["Toyota","Crown","سيدان","هايبرد","2.4L",340,2024,55],
+  ["Toyota","Land Cruiser","SUV","بنزين","3.5L Twin Turbo",409,2024,110],
+  ["Toyota","Land Cruiser Prado","SUV","بنزين","2.8L Turbo",201,2024,72],
+  ["Toyota","Fortuner","SUV","بنزين","2.7L",164,2024,42],
+  ["Toyota","RAV4","SUV","هايبرد","2.5L",219,2024,35],
+  ["Toyota","Highlander","SUV","هايبرد","2.5L",243,2024,48],
+  ["Toyota","Hilux","Pickup","بنزين","2.7L",164,2024,38],
+  ["Toyota","Tacoma","Pickup","بنزين","3.5L",278,2024,48],
+  ["Toyota","Supra","رياضية","بنزين","3.0L Turbo",382,2024,62],
+  ["Toyota","GR86","رياضية","بنزين","2.4L",228,2024,34],
+  ["Toyota","Innova","MPV","بنزين","2.0L",171,2024,28],
+
+  /* LEXUS */
+  ["Lexus","ES350","سيدان","بنزين","3.5L V6",302,2024,60],
+  ["Lexus","ES300h","سيدان","هايبرد","2.5L",215,2024,62],
+  ["Lexus","IS350","سيدان","بنزين","3.5L V6",311,2024,57],
+  ["Lexus","LS500","سيدان","بنزين","3.4L Twin Turbo",416,2024,105],
+  ["Lexus","RX350","SUV","بنزين","2.4L Turbo",275,2024,65],
+  ["Lexus","RX500h","SUV","هايبرد","2.4L Turbo",366,2024,82],
+  ["Lexus","NX350","SUV","بنزين","2.4L Turbo",275,2024,54],
+  ["Lexus","NX350h","SUV","هايبرد","2.5L",240,2024,58],
+  ["Lexus","GX550","SUV","بنزين","3.4L Twin Turbo",349,2024,92],
+  ["Lexus","LX600","SUV","بنزين","3.5L Twin Turbo",409,2024,125],
+
+  /* BMW */
+  ["BMW","218i","سيدان","بنزين","1.5L Turbo",156,2024,42],
+  ["BMW","320i","سيدان","بنزين","2.0L Turbo",184,2024,49],
+  ["BMW","330i","سيدان","بنزين","2.0L Turbo",255,2024,57],
+  ["BMW","520i","سيدان","بنزين","2.0L Turbo",208,2024,65],
+  ["BMW","530i","سيدان","بنزين","2.0L Turbo",255,2024,72],
+  ["BMW","740i","سيدان","بنزين","3.0L Turbo",375,2024,110],
+  ["BMW","M340i","سيدان","بنزين","3.0L Turbo",382,2024,75],
+  ["BMW","M3","رياضية","بنزين","3.0L Twin Turbo",503,2024,95],
+  ["BMW","M4","رياضية","بنزين","3.0L Twin Turbo",503,2024,100],
+  ["BMW","X1","SUV","بنزين","2.0L Turbo",241,2024,48],
+  ["BMW","X3","SUV","بنزين","2.0L Turbo",248,2024,58],
+  ["BMW","X5","SUV","بنزين","3.0L Turbo",375,2024,95],
+  ["BMW","X6","SUV","بنزين","3.0L Turbo",375,2024,105],
+  ["BMW","X7","SUV","بنزين","3.0L Turbo",375,2024,120],
+  ["BMW","i4","سيدان","كهربائية","Electric",536,2024,70],
+
+  /* MERCEDES */
+  ["Mercedes-Benz","A200","سيدان","بنزين","1.3L Turbo",163,2024,42],
+  ["Mercedes-Benz","C200","سيدان","بنزين","1.5L Turbo",204,2024,62],
+  ["Mercedes-Benz","C300","سيدان","بنزين","2.0L Turbo",255,2024,72],
+  ["Mercedes-Benz","E200","سيدان","بنزين","2.0L Turbo",204,2024,78],
+  ["Mercedes-Benz","E300","سيدان","بنزين","2.0L Turbo",255,2024,90],
+  ["Mercedes-Benz","S500","سيدان","بنزين","3.0L Turbo",429,2024,145],
+  ["Mercedes-Benz","GLA200","SUV","بنزين","1.3L Turbo",163,2024,50],
+  ["Mercedes-Benz","GLC300","SUV","بنزين","2.0L Turbo",255,2024,75],
+  ["Mercedes-Benz","GLE450","SUV","بنزين","3.0L Turbo",375,2024,100],
+  ["Mercedes-Benz","GLS450","SUV","بنزين","3.0L Turbo",375,2024,120],
+  ["Mercedes-Benz","AMG C63","رياضية","هايبرد","2.0L Turbo",671,2024,125],
+  ["Mercedes-Benz","EQE","سيدان","كهربائية","Electric",402,2024,90],
+  ["Mercedes-Benz","EQS","سيدان","كهربائية","Electric",536,2024,135],
+
+  /* HYUNDAI */
+  ["Hyundai","Elantra","سيدان","بنزين","2.0L",147,2024,21],
+  ["Hyundai","Sonata","سيدان","بنزين","2.5L",191,2024,29],
+  ["Hyundai","Accent","سيدان","بنزين","1.6L",120,2024,18],
+  ["Hyundai","Tucson","SUV","بنزين","2.5L",187,2024,31],
+  ["Hyundai","Santa Fe","SUV","بنزين","2.5L Turbo",277,2024,43],
+  ["Hyundai","Palisade","SUV","بنزين","3.8L V6",291,2024,48],
+  ["Hyundai","Kona","SUV","بنزين","2.0L",147,2024,25],
+  ["Hyundai","Creta","SUV","بنزين","1.5L",115,2024,22],
+  ["Hyundai","Ioniq 5","SUV","كهربائية","Electric",320,2024,48],
+  ["Hyundai","Ioniq 6","سيدان","كهربائية","Electric",320,2024,50],
+  ["Hyundai","Santa Cruz","Pickup","بنزين","2.5L Turbo",281,2024,37],
+  ["Hyundai","Staria","MPV","بنزين","2.2L",177,2024,39],
+
+  /* KIA */
+  ["Kia","K3","سيدان","بنزين","1.6L",121,2024,20],
+  ["Kia","K5","سيدان","بنزين","2.5L Turbo",290,2024,31],
+  ["Kia","K8","سيدان","بنزين","3.5L",300,2024,42],
+  ["Kia","K9","سيدان","بنزين","3.3L Turbo",365,2024,65],
+  ["Kia","Sportage","SUV","بنزين","2.5L",187,2024,30],
+  ["Kia","Sorento","SUV","بنزين","2.5L Turbo",281,2024,43],
+  ["Kia","Telluride","SUV","بنزين","3.8L V6",291,2024,48],
+  ["Kia","Seltos","SUV","بنزين","2.0L",146,2024,24],
+  ["Kia","Carnival","MPV","بنزين","3.5L V6",290,2024,45],
+  ["Kia","EV6","SUV","كهربائية","Electric",576,2024,52],
+
+  /* NISSAN */
+  ["Nissan","Sunny","سيدان","بنزين","1.6L",118,2024,17],
+  ["Nissan","Sentra","سيدان","بنزين","2.0L",149,2024,22],
+  ["Nissan","Altima","سيدان","بنزين","2.5L",188,2024,28],
+  ["Nissan","Maxima","سيدان","بنزين","3.5L V6",300,2023,38],
+  ["Nissan","Kicks","SUV","بنزين","1.6L",122,2024,22],
+  ["Nissan","X-Trail","SUV","بنزين","2.5L",181,2024,31],
+  ["Nissan","Pathfinder","SUV","بنزين","3.5L V6",284,2024,48],
+  ["Nissan","Patrol","SUV","بنزين","5.6L V8",400,2024,95],
+  ["Nissan","Armada","SUV","بنزين","5.6L V8",400,2024,82],
+  ["Nissan","Z","رياضية","بنزين","3.0L Twin Turbo",400,2024,52],
+  ["Nissan","GT-R","رياضية","بنزين","3.8L Twin Turbo",565,2024,110],
+
+  /* HONDA */
+  ["Honda","Civic","سيدان","بنزين","2.0L",158,2024,25],
+  ["Honda","Accord","سيدان","هايبرد","2.0L",204,2024,34],
+  ["Honda","City","سيدان","بنزين","1.5L",119,2024,19],
+  ["Honda","CR-V","SUV","هايبرد","2.0L",204,2024,35],
+  ["Honda","Pilot","SUV","بنزين","3.5L V6",285,2024,48],
+  ["Honda","HR-V","SUV","بنزين","2.0L",158,2024,26],
+  ["Honda","Passport","SUV","بنزين","3.5L V6",280,2024,43],
+
+  /* BYD */
+  ["BYD","Qin Plus","سيدان","هايبرد","1.5L Hybrid",197,2024,22],
+  ["BYD","Qin L","سيدان","هايبرد","1.5L Hybrid",218,2024,25],
+  ["BYD","Seal","سيدان","كهربائية","Electric",530,2024,45],
+  ["BYD","Han","سيدان","كهربائية","Electric",509,2024,52],
+  ["BYD","Song Plus","SUV","هايبرد","1.5L Hybrid",218,2024,30],
+  ["BYD","Song L","SUV","كهربائية","Electric",517,2024,43],
+  ["BYD","Yuan Plus","SUV","كهربائية","Electric",204,2024,27],
+  ["BYD","Atto 3","SUV","كهربائية","Electric",204,2024,27],
+  ["BYD","Tang","SUV","كهربائية","Electric",517,2024,55],
+  ["BYD","Dolphin","هاتشباك","كهربائية","Electric",204,2024,20],
+
+  /* GEELY */
+  ["Geely","Emgrand","سيدان","بنزين","1.5L",102,2024,17],
+  ["Geely","Preface","سيدان","بنزين","2.0L Turbo",215,2024,29],
+  ["Geely","Coolray","SUV","بنزين","1.5L Turbo",177,2024,23],
+  ["Geely","Monjaro","SUV","بنزين","2.0L Turbo",218,2024,34],
+  ["Geely","Okavango","SUV","بنزين","2.0L Turbo",218,2024,32],
+  ["Geely","Starray","SUV","بنزين","2.0L Turbo",218,2024,31],
+
+  /* CHERY */
+  ["Chery","Arrizo 5","سيدان","بنزين","1.5L",116,2024,16],
+  ["Chery","Arrizo 6","سيدان","بنزين","1.5L Turbo",147,2024,20],
+  ["Chery","Tiggo 4","SUV","بنزين","1.5L",116,2024,20],
+  ["Chery","Tiggo 7","SUV","بنزين","1.5L Turbo",156,2024,24],
+  ["Chery","Tiggo 8","SUV","بنزين","1.6L Turbo",197,2024,29],
+  ["Chery","Tiggo 9","SUV","بنزين","2.0L Turbo",254,2024,36],
+
+  /* MG */
+  ["MG","5","سيدان","بنزين","1.5L",112,2024,17],
+  ["MG","6","سيدان","بنزين","1.5L Turbo",181,2024,22],
+  ["MG","GT","سيدان","بنزين","1.5L Turbo",173,2024,21],
+  ["MG","ZS","SUV","بنزين","1.5L",105,2024,20],
+  ["MG","HS","SUV","بنزين","1.5L Turbo",160,2024,27],
+  ["MG","RX5","SUV","بنزين","1.5L Turbo",171,2024,25],
+  ["MG","RX8","SUV","بنزين","2.0L Turbo",220,2024,35],
+
+  /* FORD */
+  ["Ford","Mustang","رياضية","بنزين","5.0L V8",480,2024,58],
+  ["Ford","Explorer","SUV","بنزين","2.3L Turbo",300,2024,42],
+  ["Ford","Expedition","SUV","بنزين","3.5L Twin Turbo",400,2024,75],
+  ["Ford","Everest","SUV","ديزل","2.0L Turbo",210,2024,47],
+  ["Ford","Ranger","Pickup","ديزل","2.0L Turbo",210,2024,40],
+  ["Ford","F-150","Pickup","بنزين","5.0L V8",400,2024,55],
+  ["Ford","Bronco","SUV","بنزين","2.7L Turbo",330,2024,48],
+
+  /* CHEVROLET */
+  ["Chevrolet","Malibu","سيدان","بنزين","1.5L Turbo",160,2024,24],
+  ["Chevrolet","Impala","سيدان","بنزين","3.6L V6",305,2020,30],
+  ["Chevrolet","Tahoe","SUV","بنزين","5.3L V8",355,2024,70],
+  ["Chevrolet","Suburban","SUV","بنزين","5.3L V8",355,2024,78],
+  ["Chevrolet","Traverse","SUV","بنزين","3.6L V6",310,2024,48],
+  ["Chevrolet","Camaro","رياضية","بنزين","6.2L V8",455,2024,55],
+  ["Chevrolet","Silverado","Pickup","بنزين","5.3L V8",355,2024,52],
+
+  /* VOLKSWAGEN */
+  ["Volkswagen","Jetta","سيدان","بنزين","1.5L Turbo",158,2024,23],
+  ["Volkswagen","Passat","سيدان","بنزين","2.0L Turbo",174,2022,27],
+  ["Volkswagen","Tiguan","SUV","بنزين","2.0L Turbo",184,2024,31],
+  ["Volkswagen","Touareg","SUV","بنزين","3.0L Turbo",335,2024,65],
+  ["Volkswagen","Golf GTI","هاتشباك","بنزين","2.0L Turbo",241,2024,35],
+
+  /* AUDI */
+  ["Audi","A3","سيدان","بنزين","1.4L Turbo",150,2024,40],
+  ["Audi","A4","سيدان","بنزين","2.0L Turbo",201,2024,50],
+  ["Audi","A6","سيدان","بنزين","2.0L Turbo",261,2024,70],
+  ["Audi","A8","سيدان","بنزين","3.0L Turbo",335,2024,105],
+  ["Audi","Q3","SUV","بنزين","2.0L Turbo",228,2024,45],
+  ["Audi","Q5","SUV","بنزين","2.0L Turbo",261,2024,58],
+  ["Audi","Q7","SUV","بنزين","3.0L Turbo",335,2024,78],
+  ["Audi","Q8","SUV","بنزين","3.0L Turbo",335,2024,85],
+  ["Audi","RS6","سوبر","بنزين","4.0L Twin Turbo",591,2024,125],
+
+  /* PORSCHE */
+  ["Porsche","Macan","SUV","بنزين","2.0L Turbo",261,2024,72],
+  ["Porsche","Cayenne","SUV","بنزين","3.0L Turbo",348,2024,95],
+  ["Porsche","Panamera","سيدان","بنزين","2.9L Turbo",325,2024,105],
+  ["Porsche","911 Carrera","رياضية","بنزين","3.0L Twin Turbo",379,2024,125],
+  ["Porsche","Taycan","كهربائية","كهربائية","Electric",482,2024,110],
+
+  /* VOLVO */
+  ["Volvo","S60","سيدان","هايبرد","2.0L Turbo",455,2024,55],
+  ["Volvo","S90","سيدان","هايبرد","2.0L Turbo",455,2024,68],
+  ["Volvo","XC40","SUV","كهربائية","Electric",402,2024,52],
+  ["Volvo","XC60","SUV","هايبرد","2.0L Turbo",455,2024,65],
+  ["Volvo","XC90","SUV","هايبرد","2.0L Turbo",455,2024,78],
+
+  /* JEEP */
+  ["Jeep","Wrangler","SUV","بنزين","3.6L V6",285,2024,45],
+  ["Jeep","Grand Cherokee","SUV","بنزين","3.6L V6",293,2024,55],
+  ["Jeep","Gladiator","Pickup","بنزين","3.6L V6",285,2024,48],
+  ["Jeep","Compass","SUV","بنزين","2.0L",170,2024,30],
+  ["Jeep","Renegade","SUV","بنزين","1.3L Turbo",177,2024,25],
+
+  /* RANGE ROVER */
+  ["Land Rover","Defender","SUV","بنزين","3.0L Turbo",395,2024,105],
+  ["Land Rover","Discovery","SUV","بنزين","3.0L Turbo",355,2024,90],
+  ["Land Rover","Range Rover Sport","SUV","بنزين","3.0L Turbo",395,2024,125],
+  ["Land Rover","Range Rover","SUV","بنزين","4.4L Twin Turbo",523,2024,170],
+
+  /* MAZDA */
+  ["Mazda","Mazda 3","سيدان","بنزين","2.5L",191,2024,25],
+  ["Mazda","Mazda 6","سيدان","بنزين","2.5L Turbo",250,2024,31],
+  ["Mazda","CX-5","SUV","بنزين","2.5L",187,2024,30],
+  ["Mazda","CX-50","SUV","بنزين","2.5L Turbo",256,2024,35],
+  ["Mazda","CX-90","SUV","هايبرد","3.3L Turbo",340,2024,48],
+  ["Mazda","MX-5","رياضية","بنزين","2.0L",181,2024,30]
+
+];
+
+
+/* =========================================================
+   TURN MODELS INTO 300 LISTINGS
+========================================================= */
+
+const carDatabase = [];
+
+let generatedID = 1;
+
+iraqCars.forEach((car, index) => {
+
+  carDatabase.push({
+
+    id: generatedID++,
+
+    brand: car[0],
+
+    model: car[1],
+
+    type: car[2],
+
+    fuel: car[3],
+
+    engine: car[4],
+
+    power: car[5],
+
+    year: car[6],
+
+    price: car[7],
+
+    seats:
+      car[2] === "SUV" ? 7 :
+      car[2] === "MPV" ? 7 : 5,
+
+    emoji:
+      car[2] === "SUV" ? "🚙" :
+      car[2] === "Pickup" ? "🛻" :
+      car[2] === "رياضية" ||
+      car[2] === "سوبر" ? "🏎️" :
+      "🚘"
+
+  });
+
+});
+
+
+/*
+  نضيف سنوات مختلفة لبعض الموديلات
+  حتى تكون قاعدة البيانات أكبر.
+*/
+
+const originalCars =
+  [...carDatabase];
+
+
+for (
+  let i = 0;
+  carDatabase.length < 300;
+  i++
+) {
+
+  const base =
+    originalCars[
+      i % originalCars.length
+    ];
+
+
+  const copy = {
+
+    ...base,
+
+    id: generatedID++,
+
+    year:
+      2024 -
+      (Math.floor(i / originalCars.length) % 5),
+
+    price:
+      Math.max(
+        10,
+        base.price -
+        (
+          Math.floor(i / originalCars.length) *
+          1.5
+        )
+      )
+
+  };
+
+
+  carDatabase.push(copy);
+
+}
+
+
+/* =========================================================
+   PAGE DESIGN
+========================================================= */
+
+const style =
+document.createElement("style");
+
+style.innerHTML = `
+
+#iraqCarsNewSection {
+
+  max-width:1200px;
+
+  margin:50px auto;
+
+  padding:20px;
+
+}
+
+.iraq-title {
+
+  text-align:center;
+
+  margin-bottom:25px;
+
+}
+
+.iraq-title h2 {
+
+  font-size:30px;
+
+  margin-bottom:8px;
+
+}
+
+.iraq-title p {
+
+  color:#64748b;
+
+}
+
+
+.iraq-tools {
+
+  background:white;
+
+  padding:20px;
+
+  border-radius:20px;
+
+  box-shadow:
+  0 5px 25px rgba(0,0,0,.07);
+
+  margin-bottom:25px;
+
+}
+
+
+.iraq-search {
+
+  width:100%;
+
+  padding:15px;
+
+  border:1px solid #e2e8f0;
+
+  border-radius:12px;
+
+  font-size:16px;
+
+  outline:none;
+
+  margin-bottom:15px;
+
+}
+
+
+.iraq-filters {
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(auto-fit,minmax(170px,1fr));
+
+  gap:10px;
+
+}
+
+
+.iraq-filters select {
+
+  padding:13px;
+
+  border:1px solid #e2e8f0;
+
+  border-radius:10px;
+
+  background:white;
+
+}
+
+
+.iraq-results {
+
+  margin-top:15px;
+
+  color:#64748b;
+
+  font-size:14px;
+
+}
+
+
+.iraq-grid {
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(auto-fill,minmax(270px,1fr));
+
+  gap:18px;
+
+}
+
+
+.iraq-card {
+
+  background:white;
+
+  border-radius:18px;
+
+  overflow:hidden;
+
+  box-shadow:
+  0 5px 20px rgba(0,0,0,.07);
+
+  transition:
+  transform .2s,
+  box-shadow .2s;
+
+}
+
+
+.iraq-card:hover {
+
+  transform:translateY(-5px);
+
+  box-shadow:
+  0 12px 30px rgba(0,0,0,.12);
+
+}
+
+
+.iraq-car-photo {
+
+  height:150px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:75px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #dbeafe,
+    #eff6ff
+  );
+
+}
+
+
+.iraq-card-info {
+
+  padding:18px;
+
+}
+
+
+.iraq-card-info h3 {
+
+  margin-bottom:7px;
+
+}
+
+
+.iraq-meta {
+
+  color:#64748b;
+
+  font-size:13px;
+
+  margin-bottom:12px;
+
+}
+
+
+.iraq-specs {
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:7px;
+
+  margin-bottom:15px;
+
+}
+
+
+.iraq-spec {
+
+  background:#f8fafc;
+
+  padding:8px;
+
+  border-radius:8px;
+
+  font-size:12px;
+
+}
+
+
+.iraq-price {
+
+  color:#2563eb;
+
+  font-size:19px;
+
+  font-weight:bold;
+
+  margin-bottom:12px;
+
+}
+
+
+.iraq-buttons {
+
+  display:flex;
+
+  gap:8px;
+
+}
+
+
+.iraq-buttons button {
+
+  flex:1;
+
+  border:none;
+
+  padding:10px;
+
+  border-radius:9px;
+
+  cursor:pointer;
+
+}
+
+
+.iraq-details {
+
+  background:#2563eb;
+
+  color:white;
+
+}
+
+
+.iraq-fav {
+
+  background:#f1f5f9;
+
+}
+
+
+.iraq-pagination {
+
+  display:flex;
+
+  justify-content:center;
+
+  gap:7px;
+
+  margin-top:30px;
+
+  flex-wrap:wrap;
+
+}
+
+
+.iraq-page {
+
+  border:none;
+
+  padding:10px 14px;
+
+  border-radius:9px;
+
+  background:#e2e8f0;
+
+  cursor:pointer;
+
+}
+
+
+.iraq-page.active {
+
+  background:#2563eb;
+
+  color:white;
+
+}
+
+
+@media(max-width:600px) {
+
+  #iraqCarsNewSection {
+
+    padding:12px;
+
+  }
+
+  .iraq-title h2 {
+
+    font-size:24px;
+
+  }
+
+  .iraq-grid {
+
+    grid-template-columns:1fr;
+
+  }
+
+}
+
+`;
+
+
+document.head.appendChild(style);
+
+
+/* =========================================================
+   CREATE SECTION
+========================================================= */
+
+function createNewCarSection() {
+
+  const old =
+    document.getElementById(
+      "iraqCarsNewSection"
+    );
+
+  if (old) old.remove();
+
+
+  const section =
+    document.createElement("section");
+
+
+  section.id =
+    "iraqCarsNewSection";
+
+
+  section.innerHTML = `
+
+    <div class="iraq-title">
+
+      <h2>
+        🚘 قاعدة سيارات العراق
+      </h2>
+
+      <p>
+        أكثر من 300 سيارة للبحث والمقارنة
+      </p>
+
+    </div>
+
+
+    <div class="iraq-tools">
+
+      <input
+        id="iraqSearch"
+        class="iraq-search"
+        placeholder="🔍 ابحث عن اسم السيارة أو الشركة..."
+      >
+
+
+      <div class="iraq-filters">
+
+        <select id="iraqBrand">
+
+          <option value="">
+            كل الشركات
+          </option>
+
+        </select>
+
+
+        <select id="iraqType">
+
+          <option value="">
+            كل الأنواع
+          </option>
+
+        </select>
+
+
+        <select id="iraqFuel">
+
+          <option value="">
+            كل أنواع الوقود
+          </option>
+
+        </select>
+
+
+        <select id="iraqSort">
+
+          <option value="">
+            الترتيب
+          </option>
+
+          <option value="low">
+            السعر الأقل
+          </option>
+
+          <option value="high">
+            السعر الأعلى
+          </option>
+
+          <option value="power">
+            القوة الأعلى
+          </option>
+
+          <option value="new">
+            الأحدث
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div
+        id="iraqResults"
+        class="iraq-results"
+      ></div>
+
+    </div>
+
+
+    <div
+      id="iraqGrid"
+      class="iraq-grid"
+    ></div>
+
+
+    <div
+      id="iraqPagination"
+      class="iraq-pagination"
+    ></div>
+
+  `;
+
+
+  document.body.appendChild(
+    section
+  );
+
+
+  fillNewFilters();
+
+  renderNewCars(1);
+
+}
+
+
+/* =========================================================
+   FILTER OPTIONS
+========================================================= */
+
+function fillNewFilters() {
+
+  const brand =
+    document.getElementById(
+      "iraqBrand"
+    );
+
+  const type =
+    document.getElementById(
+      "iraqType"
+    );
+
+  const fuel =
+    document.getElementById(
+      "iraqFuel"
+    );
+
+
+  const brands =
+    [...new Set(
+      carDatabase.map(
+        car => car.brand
+      )
+    )];
+
+
+  const types =
+    [...new Set(
+      carDatabase.map(
+        car => car.type
+      )
+    )];
+
+
+  const fuels =
+    [...new Set(
+      carDatabase.map(
+        car => car.fuel
+      )
+    )];
+
+
+  brands.forEach(item => {
+
+    brand.innerHTML +=
+      `<option value="${item}">
+        ${item}
+      </option>`;
+
+  });
+
+
+  types.forEach(item => {
+
+    type.innerHTML +=
+      `<option value="${item}">
+        ${item}
+      </option>`;
+
+  });
+
+
+  fuels.forEach(item => {
+
+    fuel.innerHTML +=
+      `<option value="${item}">
+        ${item}
+      </option>`;
+
+  });
+
+
+  document
+    .getElementById("iraqSearch")
+    .addEventListener(
+      "input",
+      () => renderNewCars(1)
+    );
+
+
+  brand.addEventListener(
+    "change",
+    () => renderNewCars(1)
+  );
+
+
+  type.addEventListener(
+    "change",
+    () => renderNewCars(1)
+  );
+
+
+  fuel.addEventListener(
+    "change",
+    () => renderNewCars(1)
+  );
+
+
+  document
+    .getElementById("iraqSort")
+    .addEventListener(
+      "change",
+      () => renderNewCars(1)
+    );
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function getFilteredCars() {
+
+  const search =
+    document
+      .getElementById("iraqSearch")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const brand =
+    document
+      .getElementById("iraqBrand")
+      .value;
+
+
+  const type =
+    document
+      .getElementById("iraqType")
+      .value;
+
+
+  const fuel =
+    document
+      .getElementById("iraqFuel")
+      .value;
+
+
+  const sort =
+    document
+      .getElementById("iraqSort")
+      .value;
+
+
+  let list =
+    carDatabase.filter(car => {
+
+      const name =
+        `${car.brand} ${car.model}`
+        .toLowerCase();
+
+
+      return (
+
+        (!search ||
+          name.includes(search)) &&
+
+        (!brand ||
+          car.brand === brand) &&
+
+        (!type ||
+          car.type === type) &&
+
+        (!fuel ||
+          car.fuel === fuel)
+
+      );
+
+    });
+
+
+  if (sort === "low") {
+
+    list.sort(
+      (a,b) =>
+        a.price - b.price
+    );
+
+  }
+
+
+  if (sort === "high") {
+
+    list.sort(
+      (a,b) =>
+        b.price - a.price
+    );
+
+  }
+
+
+  if (sort === "power") {
+
+    list.sort(
+      (a,b) =>
+        b.power - a.power
+    );
+
+  }
+
+
+  if (sort === "new") {
+
+    list.sort(
+      (a,b) =>
+        b.year - a.year
+    );
+
+  }
+
+
+  return list;
+
+}
+
+
+/* =========================================================
+   RENDER 12 PER PAGE
+========================================================= */
+
+function renderNewCars(page) {
+
+  const list =
+    getFilteredCars();
+
+
+  const perPage = 12;
+
+
+  const totalPages =
+    Math.ceil(
+      list.length / perPage
+    );
+
+
+  if (page > totalPages)
+    page = totalPages || 1;
+
+
+  const start =
+    (page - 1) * perPage;
+
+
+  const current =
+    list.slice(
+      start,
+      start + perPage
+    );
+
+
+  const grid =
+    document.getElementById(
+      "iraqGrid"
+    );
+
+
+  const results =
+    document.getElementById(
+      "iraqResults"
+    );
+
+
+  results.textContent =
+    `تم العثور على ${list.length} سيارة • الصفحة ${page} من ${totalPages || 1}`;
+
+
+  grid.innerHTML =
+    current.map(
+      car => `
+
+      <article class="iraq-card">
+
+        <div class="iraq-car-photo">
+
+          ${car.emoji}
+
+        </div>
+
+
+        <div class="iraq-card-info">
+
+          <h3>
+            ${car.brand}
+            ${car.model}
+          </h3>
+
+
+          <div class="iraq-meta">
+
+            ${car.year}
+            •
+            ${car.type}
+            •
+            ${car.fuel}
+
+          </div>
+
+
+          <div class="iraq-specs">
+
+            <div class="iraq-spec">
+              🔧 ${car.engine}
+            </div>
+
+            <div class="iraq-spec">
+              ⚡ ${car.power} HP
+            </div>
+
+            <div class="iraq-spec">
+              🪑 ${car.seats} مقاعد
+            </div>
+
+            <div class="iraq-spec">
+              🚘 ${car.year}
+            </div>
+
+          </div>
+
+
+          <div class="iraq-price">
+
+            ${car.price.toFixed(1)}
+            مليون د.ع
+
+          </div>
+
+
+          <div class="iraq-buttons">
+
+            <button
+              class="iraq-details"
+              onclick="
+                showNewCarDetails(${car.id})
+              "
+            >
+              التفاصيل
+            </button>
+
+
+            <button
+              class="iraq-fav"
+              onclick="
+                saveNewFavorite(${car.id})
+              "
+            >
+              ❤️
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    `
+    ).join("");
+
+
+  renderNewPagination(
+    totalPages,
+    page
+  );
+
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+function renderNewPagination(
+  total,
+  current
+) {
+
+  const box =
+    document.getElementById(
+      "iraqPagination"
+    );
+
+
+  if (total <= 1) {
+
+    box.innerHTML = "";
+
+    return;
+
+  }
+
+
+  let html = "";
+
+
+  for (
+    let i = 1;
+    i <= total;
+    i++
+  ) {
+
+    html += `
+
+      <button
+        class="
+          iraq-page
+          ${i === current ? "active" : ""}
+        "
+        onclick="
+          renderNewCars(${i})
+        "
+      >
+        ${i}
+      </button>
+
+    `;
+
+  }
+
+
+  box.innerHTML =
+    html;
+
+}
+
+
+/* =========================================================
+   FAVORITES
+========================================================= */
+
+function saveNewFavorite(id) {
+
+  let saved =
+    JSON.parse(
+      localStorage.getItem(
+        "iraqCarsFavoritesNew"
+      ) || "[]"
+    );
+
+
+  if (
+    saved.includes(id)
+  ) {
+
+    saved =
+      saved.filter(
+        x => x !== id
+      );
+
+    alert(
+      "تم حذف السيارة من المفضلة"
+    );
+
+  } else {
+
+    saved.push(id);
+
+    alert(
+      "❤️ تمت إضافة السيارة للمفضلة"
+    );
+
+  }
+
+
+  localStorage.setItem(
+    "iraqCarsFavoritesNew",
+    JSON.stringify(saved)
+  );
+
+}
+
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+function showNewCarDetails(id) {
+
+  const car =
+    carDatabase.find(
+      x => x.id === id
+    );
+
+
+  if (!car) return;
+
+
+  const modal =
+    document.createElement(
+      "div"
+    );
+
+
+  modal.style.position =
+    "fixed";
+
+  modal.style.inset =
+    "0";
+
+  modal.style.background =
+    "rgba(0,0,0,.7)";
+
+  modal.style.zIndex =
+    "99999";
+
+  modal.style.padding =
+    "20px";
+
+  modal.style.overflow =
+    "auto";
+
+
+  modal.innerHTML = `
+
+    <div style="
+      max-width:600px;
+      margin:50px auto;
+      background:white;
+      border-radius:20px;
+      padding:25px;
+      color:#111827;
+    ">
+
+      <div style="
+        text-align:center;
+        font-size:90px;
+      ">
+        ${car.emoji}
+      </div>
+
+
+      <h2 style="
+        text-align:center;
+        margin:10px 0;
+      ">
+
+        ${car.brand}
+        ${car.model}
+
+      </h2>
+
+
+      <p style="
+        text-align:center;
+        color:#64748b;
+      ">
+
+        ${car.year}
+        •
+        ${car.type}
+        •
+        ${car.fuel}
+
+      </p>
+
+
+      <hr style="
+        margin:20px 0;
+        border:none;
+        border-top:1px solid #eee;
+      ">
+
+
+      <div style="
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:12px;
+      ">
+
+        <div>
+          🔧 المحرك
+          <strong>
+            ${car.engine}
+          </strong>
+        </div>
+
+        <div>
+          ⚡ القوة
+          <strong>
+            ${car.power} HP
+          </strong>
+        </div>
+
+        <div>
+          🪑 المقاعد
+          <strong>
+            ${car.seats}
+          </strong>
+        </div>
+
+        <div>
+          📅 السنة
+          <strong>
+            ${car.year}
+          </strong>
+        </div>
+
+      </div>
+
+
+      <div style="
+        margin-top:20px;
+        background:#eff6ff;
+        padding:18px;
+        border-radius:12px;
+        text-align:center;
+      ">
+
+        <div style="
+          color:#2563eb;
+          font-size:25px;
+          font-weight:bold;
+        ">
+
+          ${car.price.toFixed(1)}
+          مليون د.ع
+
+        </div>
+
+
+        <small style="
+          color:#64748b;
+        ">
+
+          سعر تجريبي للعرض داخل الموقع
+
+        </small>
+
+      </div>
+
+
+      <button
+        onclick="this.closest('div[style*=fixed]').remove()"
+        style="
+          width:100%;
+          margin-top:20px;
+          border:none;
+          background:#111827;
+          color:white;
+          padding:13px;
+          border-radius:10px;
+          cursor:pointer;
+        "
+      >
+        إغلاق
+      </button>
+
+    </div>
+
+  `;
+
+
+  document.body.appendChild(
+    modal
+  );
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+function startNewIraqCars() {
+
+  createNewCarSection();
+
+}
+
+
+/*
+  ننتظر تحميل الصفحة
+*/
+
+if (
+  document.readyState ===
+  "loading"
+) {
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    startNewIraqCars
+  );
+
+} else {
+
+  startNewIraqCars();
+
+}
+
+</script>
 </script>
